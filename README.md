@@ -1,6 +1,6 @@
 # Pengantar-Kecerdasan-Buatan
 
-### Wesite Beasiswa
+## Wesite Beasiswa
 
 Nama Kelompok : 
 
