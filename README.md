@@ -1,6 +1,8 @@
 # Pengantar-Kecerdasan-Buatan
 
- ### Wesite Beasiswa
+### Wesite Beasiswa
+
+Nama Kelompok : 
 
 1. Andi Sultan AR
 2. Fathima Azzahra
