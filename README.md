@@ -3,7 +3,7 @@
 ## Wesite Beasiswa
 Website yang menyediakan info beasiswa
 
-### Nama Kelompok : 
+### Kelompok 6 : 
 
 1. Andi Sultan AR
 2. Fathima Azzahra
