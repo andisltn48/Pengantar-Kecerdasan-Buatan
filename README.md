@@ -1,7 +1,7 @@
 # Pengantar-Kecerdasan-Buatan
 
 ## Wesite Beasiswa
-Website yang menyediakan info beasiswa
+Penerapan sistem Kecerdasan Buatan Pada Website Beasiswa menggunakan Metode Fuzzy
 
 ### Kelompok 6 : 
 
