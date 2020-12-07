@@ -1,7 +1,7 @@
 <?php
 
-
 class Fuzzy {
+
   /* 
   ==========================================================================================================================
                                                     FUNGSI KEANGGOTAAN
@@ -11,110 +11,276 @@ class Fuzzy {
   // * IPK
   // Linear Turun
   public static function ipkRendah($ipk) {
-    if ($ipk <= 1) {
-      $nilaiIpkRendah = 1;
-    } else if ($ipk >= 1 && $ipk <= 2) {
-      $nilaiIpkRendah = (2 - $ipk) / (2 - 1);
+    if ($ipk <= 1.5) {
+      $derajatKeanggotaan = 1;
+    } else if ($ipk >= 1.5 && $ipk <= 2.5) {
+      $derajatKeanggotaan = (2.5 - $ipk) / (2.5 - 1.5);
     } else {
-      $nilaiIpkRendah = 0;
+      $derajatKeanggotaan = 0;
     }
-    return $nilaiIpkRendah;
+    return $derajatKeanggotaan;
   }
 
 
   // Kurva Segitiga
   public static function ipkSedang($ipk) {
-    if ($ipk <= 1.5 || $ipk >= 3.5) {
-      $nilaiIpkSedang = 0;
-    } else if ($ipk >= 1.5 && $ipk <= 2) {
-      $nilaiIpkSedang = ($ipk - 1.5) / (2 - 1.5);
-    } else if ($ipk >= 2 && $ipk <= 3.5) {
-      $nilaiIpkSedang = (3.5 - $ipk) / (3.5 - 2);
+    if ($ipk >= 1.5 && $ipk <= 2.5) {
+      $derajatKeanggotaan = ($ipk - 1.5) / (2.5 - 1.5);
+    } else if ($ipk >= 2.5 && $ipk <= 3.5) {
+      $derajatKeanggotaan = (3.5 - $ipk) / (3.5 - 2.5);
+    } else {
+      $derajatKeanggotaan = 0;
     }
-    return $nilaiIpkSedang;
+    return $derajatKeanggotaan;
   }
 
   // Linear Naik
   public static function ipkTinggi($ipk) {
-    if ($ipk <= 2) {
-      $nilaiIpkTinggi = 0;
-    } else if ($ipk >= 2 && $ipk <= 4) {
-      $nilaiIpkTinggi = ($ipk - 2) / (4 - 2);
+    if ($ipk <= 2.5) {
+      $derajatKeanggotaan = 0;
+    } else if ($ipk >= 2.5 && $ipk <= 4) {
+      $derajatKeanggotaan = ($ipk - 2.5) / (4 - 2.5);
     } else {
-      $nilaiIpkTinggi = 1;
+      $derajatKeanggotaan = 1;
     }
-    return $nilaiIpkTinggi;
+    return $derajatKeanggotaan;
   }
 
   // * Penghasilan Orang Tua
 
   public static function penghasilanRendah($penghasilan) {
-    if ($penghasilan <= 1000000) {
-      $nilaiPenghasilanRendah = 1;
-    } else if ($penghasilan >= 1000000 && $penghasilan <= 2000000) {
-      $nilaiPenghasilanRendah = (2000000 - $penghasilan) / (2000000 - 1000000);
+    if ($penghasilan <= 3000000) {
+      $derajatKeanggotaan = 1;
+    } else if ($penghasilan >= 3000000 && $penghasilan <= 5500000) {
+      $derajatKeanggotaan = (5500000 - $penghasilan) / (5500000 - 3000000);
     } else {
-      $nilaiPenghasilanRendah = 0;
+      $derajatKeanggotaan = 0;
     }
-    return $nilaiPenghasilanRendah;
+    return $derajatKeanggotaan;
   }
 
   public static function penghasilanSedang($penghasilan) {
-    if ($penghasilan <= 1500000 || $penghasilan >= 2500000) {
-      $nilaiPenghasilanSedang = 0;
-    } else if ($penghasilan >= 1500000 && $penghasilan <= 2000000) {
-      $nilaiPenghasilanSedang = ($penghasilan - 1500000) / (2000000 - 1500000);
-    } else if ($penghasilan >= 2000000 && $penghasilan <= 2500000) {
-      $nilaiPenghasilanSedang = (2500000 - $penghasilan) / (2500000 - 2000000);
+    if ($penghasilan >= 2000000 && $penghasilan <= 5500000) {
+      $derajatKeanggotaan = ($penghasilan - 2000000) / (5500000 - 2000000);
+    } else if ($penghasilan >= 5500000 && $penghasilan <= 9000000) {
+      $derajatKeanggotaan = (9000000 - $penghasilan) / (9000000 - 5500000);
+    } else {
+      $derajatKeanggotaan = 0;
     }
-    return $nilaiPenghasilanSedang;
+    return $derajatKeanggotaan;
   }
 
   public static function penghasilanTinggi($penghasilan) {
-    if ($penghasilan <= 2000000) {
-      $nilaiPenghasilanTinggi = 0;
-    } else if ($penghasilan >= 2000000 && $penghasilan <= 3000000) {
-      $nilaiPenghasilanTinggi = ($penghasilan - 2000000) / (3000000 - 2000000);
+    if ($penghasilan <= 5500000) {
+      $derajatKeanggotaan = 0;
+    } else if ($penghasilan >= 5500000 && $penghasilan <= 9000000) {
+      $derajatKeanggotaan = ($penghasilan - 5500000) / (9000000 - 5500000);
     } else {
-      $nilaiPenghasilanTinggi = 1;
+      $derajatKeanggotaan = 1;
     }
-    return $nilaiPenghasilanTinggi;
+    return $derajatKeanggotaan;
   }
 
   // * Jarak
-  
+
   public static function jarakDekat($jarak) {
-    if ($jarak <= 1) {
-      $nilaiJarakDekat = 1;
-    } else if ($jarak >= 1 && $jarak <= 25) {
-      $nilaiJarakDekat = (25 - $jarak) / (25 - 1);
+    if ($jarak <= 5) {
+      $derajatKeanggotaan = 1;
+    } else if ($jarak >= 5 && $jarak <= 12.5) {
+      $derajatKeanggotaan = (12.5 - $jarak) / (12.5 - 5);
     } else {
-      $nilaiJarakDekat = 0;
+      $derajatKeanggotaan = 0;
     }
-    return $nilaiJarakDekat;
+    return $derajatKeanggotaan;
   }
 
   public static function jarakSedang($jarak) {
-    if ($jarak <= 12.5 || $jarak >= 37.5) {
-      $nilaiJarakSedang = 0;
-    } else if ($jarak >= 12.5 && $jarak <= 25) {
-      $nilaiJarakSedang = ($jarak - 12.5) / (25 - 12.5);
-    } else if ($jarak >= 25 && $jarak <= 37.5) {
-      $nilaiJarakSedang = (37.5 - $jarak) / (37.5 - 25);
+    if ($jarak >= 5 && $jarak <= 12.5) {
+      $derajatKeanggotaan = ($jarak - 5) / (12.5 - 5);
+    } else if ($jarak >= 12.5 && $jarak <= 20) {
+      $derajatKeanggotaan = (20 - $jarak) / (20 - 12.5);
+    } else {
+      $derajatKeanggotaan = 0;
     }
-    return $nilaiJarakSedang;
+    return $derajatKeanggotaan;
   }
 
   public static function jarakJauh($jarak) {
-    if ($jarak <= 25) {
-      $nilaiJarakJauh = 0;
-    } else if ($jarak >= 25 && $jarak <= 50) {
-      $nilaiJarakJauh = ($jarak - 25) / (50 - 25);
+    if ($jarak <= 12.5) {
+      $derajatKeanggotaan = 0;
+    } else if ($jarak >= 12.5 && $jarak <= 20) {
+      $derajatKeanggotaan = ($jarak - 12.5) / (20 - 12.5);
     } else {
-      $nilaiJarakJauh = 1;
+      $derajatKeanggotaan = 1;
     }
-    return $nilaiJarakJauh;
+    return $derajatKeanggotaan;
   }
+
+  public static function tanggunganSedikit($tanggungan) {
+    if ($tanggungan <= 2) {
+      $derajatKeanggotaan = 1;
+    } else if ($tanggungan >= 2 && $tanggungan <= 3) {
+      $derajatKeanggotaan = (3 - $tanggungan) / (3 - 2);
+    } else {
+      $derajatKeanggotaan = 0;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function tanggunganSedang($tanggungan) {
+    if ($tanggungan >= 1 && $tanggungan <= 3) {
+      $derajatKeanggotaan = ($tanggungan - 1) / (3 - 1);
+    } else if ($tanggungan >= 3 && $tanggungan <= 6) {
+      $derajatKeanggotaan = (6 - $tanggungan) / (6 - 3);
+    } else {
+      $derajatKeanggotaan = 0;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function tanggunganBanyak($tanggungan) {
+    if ($tanggungan <= 3) {
+      $derajatKeanggotaan = 0;
+    } else if ($tanggungan >= 3 && $tanggungan <= 5) {
+      $derajatKeanggotaan = ($tanggungan - 3) / (5 - 3);
+    } else {
+      $derajatKeanggotaan = 1;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function rumahSedikit($rumah) {
+    if ($rumah <= 2) {
+      $derajatKeanggotaan = 1;
+    } else if ($rumah >= 2 && $rumah <= 3) {
+      $derajatKeanggotaan = (3 - $rumah) / (3 - 2);
+    } else {
+      $derajatKeanggotaan = 0;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function rumahBanyak($rumah) {
+    if ($rumah <= 1) {
+      $derajatKeanggotaan = 0;
+    } else if ($rumah >= 1 && $rumah <= 3) {
+      $derajatKeanggotaan = ($rumah - 1) / (3 - 1);
+    } else {
+      $derajatKeanggotaan = 1;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function motorSedikit($motor) {
+    if ($motor <= 3) {
+      $derajatKeanggotaan = 1;
+    } else if ($motor >= 3 && $motor <= 4) {
+      $derajatKeanggotaan = (4 - $motor) / (4 - 3);
+    } else {
+      $derajatKeanggotaan = 1;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function motorBanyak($motor) {
+    if ($motor <= 2) {
+      $derajatKeanggotaan = 0;
+    } else if ($motor >= 2 && $motor <= 4) {
+      $derajatKeanggotaan = ($motor - 2) / (4 - 2);
+    } else {
+      $derajatKeanggotaan = 1;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function mobilSedikit($mobil){
+    if($mobil <= 2){
+      $derajatKeanggotaan = 1;
+    } else if ($mobil >= 2 && $mobil <= 3){
+      $derajatKeanggotaan = (3 - $mobil) / (3-2); 
+    } else {
+      $derajatKeanggotaan = 0;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function mobilBanyak($mobil){
+    if($mobil <= 1){
+      $derajatKeanggotaan = 0;
+    } else if($mobil >= 1 && $mobil <= 3){
+      $derajatKeanggotaan = ($mobil - 1) / (3 - 1);
+    } else {
+      $derajatKeanggotaan = 1;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function listrikSedikit($listrik){
+    if($listrik <= 300000){
+      $derajatKeanggotaan = 1;
+    } else if ($listrik >= 300000 && $listrik <= 400000){
+      $derajatKeanggotaan = (400000 - $listrik) / (400000 - 300000);
+    } else {
+      $derajatKeanggotaan = 0;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function listrikSedang($listrik){
+    if($listrik >= 200000 && $listrik <= 400000){
+      $derajatKeanggotaan = ($listrik - 200000) / (400000 - 200000);
+    } else if ($listrik >= 400000 && $listrik <= 600000){
+      $derajatKeanggotaan = (600000 - $listrik) / (600000 - 400000);
+    } else {
+      $derajatKeanggotaan = 0;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function listrikBanyak($listrik){
+    if($listrik <= 400000){
+      $derajatKeanggotaan = 0;
+    } else if($listrik >= 400000 && $listrik <= 600000){
+      $derajatKeanggotaan = ($listrik - 400000) / (600000 - 400000);
+    } else {
+      $derajatKeanggotaan = 1;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function airSedikit($air){
+    if($air <= 300000){
+      $derajatKeanggotaan = 1;
+    } else if ($air >= 300000 && $air <= 400000){
+      $derajatKeanggotaan = (400000 - $air) / (400000 - 300000);
+    } else {
+      $derajatKeanggotaan = 0;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function airSedang($air){
+    if($air >= 200000 && $air <= 400000){
+      $derajatKeanggotaan = ($air - 200000) / (400000 - 200000);
+    } else if ($air >= 400000 && $air <= 600000){
+      $derajatKeanggotaan = (600000 - $air) / (600000 - 400000);
+    } else {
+      $derajatKeanggotaan = 0;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function airBanyak($air){
+    if($air <= 400000){
+      $derajatKeanggotaan = 0;
+    } else if($air >= 400000 && $air <= 600000){
+      $derajatKeanggotaan = ($air - 400000) / (600000 - 400000);
+    } else {
+      $derajatKeanggotaan = 1;
+    }
+    return $derajatKeanggotaan;
+  }
+
 
   /* 
   ==========================================================================================================================
@@ -124,54 +290,54 @@ class Fuzzy {
 
 
 
-
+  // <div>
   /*  
   ==========================================================================================================================
                                                     PENENTUAN SKALA
   ==========================================================================================================================
   */
 
-  public static function skalaIPK($ipk) {
-    $skala = "";
-    $nilaiIPK = [self::ipkRendah($ipk), self::ipkSedang($ipk), self::ipkTinggi($ipk)];
-    // echo $nilaiIPK[0] . " " . $nilaiIPK[1] . " " . $nilaiIPK[2] . " ";
-    if ($nilaiIPK[0] > $nilaiIPK[1]) {
-      $skala =  "RENDAH";
-    } else if ($nilaiIPK[1] > $nilaiIPK[2]) {
-      $skala =  "SEDANG";
-    } else {
-      $skala = "TINGGI";
-    }
-    return $skala;
-  }
+  // public static function skalaIPK($ipk) {
+  //   $skala = "";
+  //   $nilaiIPK = [self::ipkRendah($ipk), self::ipkSedang($ipk), self::ipkTinggi($ipk)];
+  //   // echo $nilaiIPK[0] . " " . $nilaiIPK[1] . " " . $nilaiIPK[2] . " ";
+  //   if ($nilaiIPK[0] > $nilaiIPK[1]) {
+  //     $skala =  "RENDAH";
+  //   } else if ($nilaiIPK[1] > $nilaiIPK[2]) {
+  //     $skala =  "SEDANG";
+  //   } else {
+  //     $skala = "TINGGI";
+  //   }
+  //   return $skala;
+  // }
 
-  public static function skalaPenghasilan($penghasilan) {
-    $skala = "";
-    $nilaiPenghasilan = [self::penghasilanRendah($penghasilan), self::penghasilanSedang($penghasilan), self::penghasilanTinggi($penghasilan)];
-    // echo $nilaiPenghasilan[0] . " " . $nilaiPenghasilan[1] . " " . $nilaiPenghasilan[2] . " ";
-    if ($nilaiPenghasilan[0] > $nilaiPenghasilan[1]) {
-      $skala = "RENDAH";
-    } else if ($nilaiPenghasilan[1] > $nilaiPenghasilan[2]) {
-      $skala = "SEDANG";
-    } else {
-      $skala = "TINGGI";
-    }
-    return $skala;
-  }
+  // public static function skalaPenghasilan($penghasilan) {
+  //   $skala = "";
+  //   $nilaiPenghasilan = [self::penghasilanRendah($penghasilan), self::penghasilanSedang($penghasilan), self::penghasilanTinggi($penghasilan)];
+  //   // echo $nilaiPenghasilan[0] . " " . $nilaiPenghasilan[1] . " " . $nilaiPenghasilan[2] . " ";
+  //   if ($nilaiPenghasilan[0] > $nilaiPenghasilan[1]) {
+  //     $skala = "RENDAH";
+  //   } else if ($nilaiPenghasilan[1] > $nilaiPenghasilan[2]) {
+  //     $skala = "SEDANG";
+  //   } else {
+  //     $skala = "TINGGI";
+  //   }
+  //   return $skala;
+  // }
 
-  public static function skalaJarak($jarak) {
-    $skala = "";
-    $nilaiJarak = [self::jarakDekat($jarak), self::jarakSedang($jarak), self::jarakJauh($jarak)];
+  // public static function skalaJarak($jarak) {
+  //   $skala = "";
+  //   $nilaiJarak = [self::jarakDekat($jarak), self::jarakSedang($jarak), self::jarakJauh($jarak)];
 
-    if ($nilaiJarak[0] > $nilaiJarak[1]) {
-      $skala = "DEKAT";
-    } else if ($nilaiJarak[1] > $nilaiJarak[2]) {
-      $skala = "SEDANG";
-    } else {
-      $skala = "JAUH";
-    }
-    return $skala;
-  }
+  //   if ($nilaiJarak[0] > $nilaiJarak[1]) {
+  //     $skala = "DEKAT";
+  //   } else if ($nilaiJarak[1] > $nilaiJarak[2]) {
+  //     $skala = "SEDANG";
+  //   } else {
+  //     $skala = "JAUH";
+  //   }
+  //   return $skala;
+  // }
 
   /*  
   ==========================================================================================================================
@@ -179,6 +345,7 @@ class Fuzzy {
   ==========================================================================================================================
   */
 
+  // </div>
 
 
 
@@ -188,7 +355,7 @@ class Fuzzy {
   ==========================================================================================================================
   */
 
-  public static function inferensi($ipk, $penghasilan, $jarak) {
+  public static function inferensi($ipk, $penghasilan, $jarak, $tanggungan) {
     // $kondisi = "";
     // $skalaIPK = self::skalaIPK($ipk);
     // $skalaPenghasilan = self::skalaPenghasilan($penghasilan);
@@ -203,13 +370,19 @@ class Fuzzy {
     //   $kondisi = "TIDAK DAPAT";
     // }
     // return $kondisi;
+
+
     echo "Rule yang digunakan : \n";
-    $no = 1;
+    // $no = 1;
     $x = 0;
     $kondisi = [];
     $nilaiIPK = [self::ipkRendah($ipk), self::ipkSedang($ipk), self::ipkTinggi($ipk)];
     $nilaiPenghasilan = [self::penghasilanRendah($penghasilan), self::penghasilanSedang($penghasilan), self::penghasilanTinggi($penghasilan)];
     $nilaiJarak = [self::jarakDekat($jarak), self::jarakSedang($jarak), self::jarakJauh($jarak)];
+    $nilaiTanggungan = [self::tanggunganSedikit($tanggungan), self::tanggunganSedang($tanggungan), self::tanggunganBanyak($tanggungan)];
+    foreach ($nilaiTanggungan as $t) {
+      echo "tanggungan : {$t} \n";
+    }
 
     for ($i = 0; $i < count($nilaiIPK); $i++) {
       for ($j = 0; $j < count($nilaiPenghasilan); $j++) {
@@ -227,12 +400,10 @@ class Fuzzy {
             } else {
               $kondisi[$x] = "TIDAK DAPAT";
             }
-            echo $no . ". IF IPK = " . $nilaiIPK[$i] . " AND Penghasilan = " . $nilaiPenghasilan[$j] . " AND Jarak = " . $nilaiJarak[$k] . " THEN Status = " . $kondisi[$x] . "(" . $minimal[$x] . ")\n";
+            echo "IF IPK = " . $nilaiIPK[$i] . " AND Penghasilan = " . $nilaiPenghasilan[$j] . " AND Jarak = " . $nilaiJarak[$k] . " THEN Status = " . $kondisi[$x] . "(" . $minimal[$x] . ")\n";
             $x++;
-            // var_dump($kondisi);
-            // self::defuzzifikasi($x, $kondisi);
           }
-          $no++;
+          // $no++;
         }
       }
     }
@@ -247,8 +418,8 @@ class Fuzzy {
         $nilaiTidakDapat = max($minimal[$l], $nilaiTidakDapat);
       }
     }
-    echo "Premis Dapat = " . $nilaiDapat . "\n";
-    echo "Premis Tidak Dapat = " . $nilaiTidakDapat . "\n";
+    echo "\nNilai Dapat = " . $nilaiDapat . "\n";
+    echo "Nilai Tidak Dapat = " . $nilaiTidakDapat . "\n";
     self::defuzzifikasi($nilaiDapat, $nilaiTidakDapat);
   }
 
@@ -269,12 +440,12 @@ class Fuzzy {
 
   public static function defuzzifikasi($nilaiDapat, $nilaiTidakDapat) {
     $nilaiAkhir = ((10 * $nilaiTidakDapat) + (40 * $nilaiDapat) + 0.5) / ((5 * $nilaiTidakDapat) + (5 + $nilaiDapat) + 0.5);
-    echo "Nilai Akhir = " . $nilaiAkhir . "\n";
-    if ($nilaiDapat > $nilaiTidakDapat) {
-      echo "DAPAT";
-    } else {
-      echo "TIDAK DAPAT";
-    }
+    echo "\nNilai Akhir = " . $nilaiAkhir . "\n";
+    // if ($nilaiDapat > $nilaiTidakDapat) {
+    //   echo "DAPAT";
+    // } else {
+    //   echo "TIDAK DAPAT";
+    // }
   }
 
   /*  
@@ -284,4 +455,5 @@ class Fuzzy {
   */
 }
 
-echo (Fuzzy::inferensi(3.4, 50000, 100));
+// echo (Fuzzy::inferensi(3.4, 1800000, 10));
+echo (Fuzzy::inferensi(2, 2900000, 12, 6));
