@@ -23,11 +23,31 @@ class Database {
     return self::$INSTANCE;
   }
 
-  public function tampilData() {
+  public function query(){
     $data = mysqli_query($this->mysqli, "SELECT * FROM dummy");
-    while ($row = mysqli_fetch_assoc($data)) {
-      $hasil[] = $row;
+    while ($row = mysqli_fetch_assoc($data)){
+        $rows[] = $row;
     }
-    return $hasil;
+    return $rows;
+  }
+
+  public function edit_data($id){
+      $data = mysqli_query($this->mysqli, "SELECT * FROM dummy WHERE id='$id'");
+      while ($row = mysqli_fetch_assoc($data)){
+          $rows[] = $row;
+      }
+      return $rows;
+  }
+
+  public function tambah_data($nama,$ipk,$penghasilan,$jarak){
+      mysqli_query($this->mysqli, "INSERT INTO dummy VALUES ('','$nama', $ipk, $penghasilan, $jarak)");
+  }
+
+  public function update_data($id, $nama, $ipk, $penghasilan, $jarak){
+      mysqli_query($this->mysqli, "UPDATE dummy SET Nama='$nama', Ipk ='$ipk', Penghasilan='$penghasilan', Jarak='$jarak' WHERE id='$id'");
+  }
+
+  public function hapus_data($id){
+      mysqli_query($this->mysqli, "DELETE FROM dummy WHERE id=$id" );
   }
 }

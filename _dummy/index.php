@@ -33,7 +33,7 @@ $db = new Database;
         </tr>
       </thead>
       <?php 
-      foreach($db->tampilData() as $d):
+      foreach($db->query() as $d):
       ?>
       <tbody>
         <tr>
