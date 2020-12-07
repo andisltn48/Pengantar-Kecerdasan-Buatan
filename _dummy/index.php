@@ -1,6 +1,6 @@
 <?php
 require_once 'core/init.php';
-require_once 'components/header.php';
+require_once 'templates/header.php';
 $db = new Database;
 
 session_start();
