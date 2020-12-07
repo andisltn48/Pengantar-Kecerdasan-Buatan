@@ -2,7 +2,19 @@
 require_once 'core/init.php';
 require_once 'components/header.php';
 $db = new Database;
+
+session_start();
+
+if($_SESSION['status'] !="login"){
+	// header("location:login.php");
+
+  echo "<script>
+            if(!alert('Maaf anda belum login!'))
+            window.location = 'login.php';
+        </script>";
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

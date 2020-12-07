@@ -1,5 +1,5 @@
 <?php
-require_once 'databaseClass.php';
+require_once '../core/init.php';
 
 
 Class Login{
@@ -16,13 +16,13 @@ Class Login{
             session_start();
             // $_SESSION['username'] = $username;
             $_SESSION['status'] = "login";
-            header("location:fuzzy.php");
+            header("location:../index.php");
             // echo "benar";
         }else{
             // header("location:login.php");	
             echo "<script>
                 if(!alert('Maaf akun anda salah!'))
-                window.location = 'login.php';
+                    window.location = '../login.php';
             </script>";
         }
     }
