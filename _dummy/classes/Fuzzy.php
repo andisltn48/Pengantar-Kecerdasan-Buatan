@@ -177,7 +177,7 @@ class Fuzzy {
     } else if ($motor >= 3 && $motor <= 4) {
       $derajatKeanggotaan = (4 - $motor) / (4 - 3);
     } else {
-      $derajatKeanggotaan = 1;
+      $derajatKeanggotaan = 0;
     }
     return $derajatKeanggotaan;
   }
@@ -281,6 +281,36 @@ class Fuzzy {
     return $derajatKeanggotaan;
   }
 
+  public static function tidakDapat($nilai ){
+    if($nilai < 40){
+      $derajatKeanggotaan = 1;
+    } else if($nilai >= 40 && $nilai <= 80){
+      $derajatKeanggotaan = (80 - $nilai) / (80 - 40);
+    } else {
+      $derajatKeanggotaan = 0;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function dapat($nilai){
+    if($nilai < 40 ){
+      $derajatKeanggotaan = 0;
+    } else if($nilai >= 40 && $nilai <= 80){
+      $derajatKeanggotaan = ($nilai - 40) / (80 - 40);
+    } else {
+      $derajatKeanggotaan = 1;
+    }
+    return $derajatKeanggotaan;
+  }
+
+  public static function z_dapat($alpha, $x){
+    return (80 - 40) * $alpha[$x] + 40;
+  }
+
+  public static function z_tidakDapat($alpha, $x){
+    return 80 - $alpha[$x] * (80 - 40);
+  }
+
 
   /* 
   ==========================================================================================================================
@@ -289,88 +319,13 @@ class Fuzzy {
   */
 
 
-
-  // <div>
-  /*  
-  ==========================================================================================================================
-                                                    PENENTUAN SKALA
-  ==========================================================================================================================
-  */
-
-  // public static function skalaIPK($ipk) {
-  //   $skala = "";
-  //   $nilaiIPK = [self::ipkRendah($ipk), self::ipkSedang($ipk), self::ipkTinggi($ipk)];
-  //   // echo $nilaiIPK[0] . " " . $nilaiIPK[1] . " " . $nilaiIPK[2] . " ";
-  //   if ($nilaiIPK[0] > $nilaiIPK[1]) {
-  //     $skala =  "RENDAH";
-  //   } else if ($nilaiIPK[1] > $nilaiIPK[2]) {
-  //     $skala =  "SEDANG";
-  //   } else {
-  //     $skala = "TINGGI";
-  //   }
-  //   return $skala;
-  // }
-
-  // public static function skalaPenghasilan($penghasilan) {
-  //   $skala = "";
-  //   $nilaiPenghasilan = [self::penghasilanRendah($penghasilan), self::penghasilanSedang($penghasilan), self::penghasilanTinggi($penghasilan)];
-  //   // echo $nilaiPenghasilan[0] . " " . $nilaiPenghasilan[1] . " " . $nilaiPenghasilan[2] . " ";
-  //   if ($nilaiPenghasilan[0] > $nilaiPenghasilan[1]) {
-  //     $skala = "RENDAH";
-  //   } else if ($nilaiPenghasilan[1] > $nilaiPenghasilan[2]) {
-  //     $skala = "SEDANG";
-  //   } else {
-  //     $skala = "TINGGI";
-  //   }
-  //   return $skala;
-  // }
-
-  // public static function skalaJarak($jarak) {
-  //   $skala = "";
-  //   $nilaiJarak = [self::jarakDekat($jarak), self::jarakSedang($jarak), self::jarakJauh($jarak)];
-
-  //   if ($nilaiJarak[0] > $nilaiJarak[1]) {
-  //     $skala = "DEKAT";
-  //   } else if ($nilaiJarak[1] > $nilaiJarak[2]) {
-  //     $skala = "SEDANG";
-  //   } else {
-  //     $skala = "JAUH";
-  //   }
-  //   return $skala;
-  // }
-
-  /*  
-  ==========================================================================================================================
-                                                    END PENENTUAN SKALA
-  ==========================================================================================================================
-  */
-
-  // </div>
-
-
-
   /*  
   ==========================================================================================================================
                                                           INFERENSI
   ==========================================================================================================================
   */
 
-  public static function inferensi($ipk, $penghasilan, $jarak, $tanggungan) {
-    // $kondisi = "";
-    // $skalaIPK = self::skalaIPK($ipk);
-    // $skalaPenghasilan = self::skalaPenghasilan($penghasilan);
-    // $skalaJarak = self::skalaJarak($jarak);
-    // if ($skalaIPK == "TINGGI" && $skalaPenghasilan == "RENDAH" && $skalaJarak == "JAUH") {
-    //   $kondisi = "DAPAT";
-    // } else if ($skalaIPK == "TINGGI" && $skalaPenghasilan == "RENDAH" && $skalaJarak == "SEDANG") {
-    //   $kondisi = "DAPAT";
-    // } else if ($skalaIPK == "TINGGI" && $skalaPenghasilan == "RENDAH" && $skalaJarak == "DEKAT") {
-    //   $kondisi = "DAPAT";
-    // } else {
-    //   $kondisi = "TIDAK DAPAT";
-    // }
-    // return $kondisi;
-
+  public static function inferensi($ipk, $penghasilan, $jarak, $tanggungan, $rumah, $motor, $mobil, $listrik, $air) {
 
     echo "Rule yang digunakan : \n";
     // $no = 1;
@@ -380,47 +335,84 @@ class Fuzzy {
     $nilaiPenghasilan = [self::penghasilanRendah($penghasilan), self::penghasilanSedang($penghasilan), self::penghasilanTinggi($penghasilan)];
     $nilaiJarak = [self::jarakDekat($jarak), self::jarakSedang($jarak), self::jarakJauh($jarak)];
     $nilaiTanggungan = [self::tanggunganSedikit($tanggungan), self::tanggunganSedang($tanggungan), self::tanggunganBanyak($tanggungan)];
-    foreach ($nilaiTanggungan as $t) {
-      echo "tanggungan : {$t} \n";
-    }
+    $nilaiRumah = [self::rumahSedikit($rumah), self::rumahBanyak($rumah)];
+    $nilaiMotor = [self::motorSedikit($motor), self::motorBanyak($motor)];
+    $nilaiMobil = [self::mobilSedikit($mobil), self::mobilBanyak($mobil)];
+    $nilaiListrik = [self::listrikSedikit($listrik), self::listrikSedang($listrik), self::listrikBanyak($listrik)];
+    $nilaiAir = [self::airSedikit($air), self::airSedang($air), self::airBanyak($air)];
 
-    for ($i = 0; $i < count($nilaiIPK); $i++) {
-      for ($j = 0; $j < count($nilaiPenghasilan); $j++) {
-        for ($k = 0; $k < count($nilaiJarak); $k++) {
-          // echo $nilaiIPK[$i] . " " . $nilaiPenghasilan[$j] . " " . $nilaiJarak[$k];
-          // echo "\n";
-          if (($nilaiIPK[$i] > 0) && ($nilaiPenghasilan[$j]) > 0 && $nilaiJarak[$k] > 0) {
-            $minimal[$x] = min($nilaiIPK[$i], $nilaiPenghasilan[$j], $nilaiJarak[$k]);
-            if ($i == 2 && $j == 0 && $k == 2) {
-              $kondisi[$x] = "DAPAT";
-            } else if ($i == 2 && $j == 0 && $k == 1) {
-              $kondisi[$x] = "DAPAT";
-            } else if ($i == 2 && $j == 0 && $k == 0) {
-              $kondisi[$x] = "DAPAT";
-            } else {
-              $kondisi[$x] = "TIDAK DAPAT";
+    for ($ip = 0; $ip < count($nilaiIPK); $ip++) {
+      for ($pn = 0; $pn < count($nilaiPenghasilan); $pn++) {
+        for ($jr = 0; $jr < count($nilaiJarak); $jr++) {
+          for ($tg = 0; $tg < count($nilaiTanggungan); $tg++){
+            for($rm = 0; $rm < count($nilaiRumah); $rm++){
+              for($mt = 0; $mt < count($nilaiMotor); $mt++){
+                for($mb = 0; $mb < count($nilaiMobil); $mb++){
+                  for($ls = 0; $ls < count($nilaiListrik); $ls++){
+                    for($ai =  0; $ai < count($nilaiAir); $ai++){
+                      if(($nilaiIPK[$ip] > 0) && ($nilaiPenghasilan[$pn] > 0) && ($nilaiJarak[$jr] > 0) && ($nilaiTanggungan[$tg] > 0) && ($nilaiRumah[$rm] > 0) && ($nilaiMotor[$mt] > 0) && ($nilaiMobil[$mb] > 0) && ($nilaiListrik[$ls] > 0) && ($nilaiAir[$ai] > 0) ){
+                        $alpha[$x] = min($nilaiIPK[$ip], $nilaiPenghasilan[$pn], $nilaiJarak[$jr], $nilaiTanggungan[$tg], $nilaiRumah[$rm], $nilaiMotor[$mt], $nilaiMobil[$mb], $nilaiListrik[$ls], $nilaiAir[$ai] );
+                        // $z_dapat = (80 - 40) * $alpha[$x] + 40;
+                        // $z_tidakDapat = 80 - $alpha[$x] * (80 - 40);
+                        if($ip == 2 && $jr == 2 && $pn == 1 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 2 && $pn == 1 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 2 && $pn == 0 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if ($ip == 2 && $jr == 2 && $pn == 0 && $tg == 1 &&  $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 1 && $pn == 1 && $tg == 2 &&  $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 1 && $pn == 1 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 1 && $pn == 0 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 1 && $pn == 0 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 0 && $pn == 1 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 0 && $pn == 1 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 0 && $pn == 0 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else if($ip == 2 && $jr == 0 && $pn == 0 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
+                          $z[$x] = self::z_dapat($alpha, $x);
+                        } else {
+                          $z[$x] = self::z_tidakDapat($alpha, $x);
+                        }
+                        echo "IF IPK = {$nilaiIPK[$ip]} AND Penghasilan = {$nilaiPenghasilan[$pn]} AND Jarak = {$nilaiJarak[$jr]} AND Tanggungan = {$nilaiTanggungan[$tg]} AND Rumah = {$nilaiRumah[$rm]} AND Motor = {$nilaiMotor[$mt]} AND Mobil = {$nilaiMobil[$mb]} AND Listrik = {$nilaiListrik[$ls]} AND Air = {$nilaiAir[$ai]} THEN a_predikat =  {$alpha[$x]} z = {$z[$x]} {$x}\n";
+                        $x++;
+                      }
+                    }
+                  }
+                }
+              }
             }
-            echo "IF IPK = " . $nilaiIPK[$i] . " AND Penghasilan = " . $nilaiPenghasilan[$j] . " AND Jarak = " . $nilaiJarak[$k] . " THEN Status = " . $kondisi[$x] . "(" . $minimal[$x] . ")\n";
-            $x++;
           }
-          // $no++;
         }
       }
     }
 
     // Nilai Fuzzy Output
-    $nilaiDapat = 0;
-    $nilaiTidakDapat = 0;
-    for ($l = 0; $l < $x; $l++) {
-      if ($kondisi[$l] == "DAPAT") {
-        $nilaiDapat = max($minimal[$l], $nilaiDapat);
-      } else {
-        $nilaiTidakDapat = max($minimal[$l], $nilaiTidakDapat);
-      }
+    // $nilaiDapat = 0;
+    // $nilaiTidakDapat = 0;
+    // for ($l = 0; $l < $x; $l++) {
+    //   if ($kondisi[$l] == "DAPAT") {
+    //     $nilaiDapat = max($alpha[$l], $nilaiDapat);
+    //   } else {
+    //     $nilaiTidakDapat = max($alpha[$l], $nilaiTidakDapat);
+    //   }
+    // }
+    // echo "\nNilai Dapat = " . $nilaiDapat . "\n";
+    // echo "Nilai Tidak Dapat = " . $nilaiTidakDapat . "\n";
+  
+    for($l = 0; $l < $x; $l++){
+      
     }
-    echo "\nNilai Dapat = " . $nilaiDapat . "\n";
-    echo "Nilai Tidak Dapat = " . $nilaiTidakDapat . "\n";
-    self::defuzzifikasi($nilaiDapat, $nilaiTidakDapat);
+    self::defuzzifikasi($alpha, $l, $z);
+    
+    
   }
 
   /*  
@@ -438,14 +430,12 @@ class Fuzzy {
   ==========================================================================================================================
   */
 
-  public static function defuzzifikasi($nilaiDapat, $nilaiTidakDapat) {
-    $nilaiAkhir = ((10 * $nilaiTidakDapat) + (40 * $nilaiDapat) + 0.5) / ((5 * $nilaiTidakDapat) + (5 + $nilaiDapat) + 0.5);
-    echo "\nNilai Akhir = " . $nilaiAkhir . "\n";
-    // if ($nilaiDapat > $nilaiTidakDapat) {
-    //   echo "DAPAT";
-    // } else {
-    //   echo "TIDAK DAPAT";
-    // }
+  public static function defuzzifikasi($alpha, $l, $z) {
+    // rumus
+    // (alpha1 * z1 + alpha2 * z2 + ...) / (alpha1 + alpha2 + ...)
+    var_dump($alpha);
+    // $defuzi = ($alpha[$l] * $z) / ($alpha[$l]);
+    // echo "OKE = " . $defuzi;
   }
 
   /*  
@@ -456,4 +446,5 @@ class Fuzzy {
 }
 
 // echo (Fuzzy::inferensi(3.4, 1800000, 10));
-echo (Fuzzy::inferensi(2, 2900000, 12, 6));
+// ipk, penghasilan, jarak, tanggungan, rumah, motor, mobil, listrik, air
+echo (Fuzzy::inferensi(3.3, 50000, 60, 3, 1, 1, 1, 100000, 100000));

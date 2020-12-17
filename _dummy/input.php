@@ -10,7 +10,7 @@ if(Input::post('submit')){
 //   echo "OK";
 // }
 
-require_once 'components/header.php';
+require_once 'templates/header.php';
 ?>
 
 <form action="" method="post">

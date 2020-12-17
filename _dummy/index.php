@@ -2,19 +2,7 @@
 require_once 'core/init.php';
 require_once 'templates/header.php';
 $db = new Database;
-
-session_start();
-
-if($_SESSION['status'] !="login"){
-	// header("location:login.php");
-
-  echo "<script>
-            if(!alert('Maaf anda belum login!'))
-            window.location = 'login.php';
-        </script>";
-}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,17 +32,17 @@ if($_SESSION['status'] !="login"){
           <th class="border bg-gray-300 px-4 py-2">Jarak</th>
         </tr>
       </thead>
-      <?php 
-      foreach($db->query() as $d):
+      <?php
+      foreach ($db->tampilData() as $d) :
       ?>
-      <tbody>
-        <tr>
-          <td class="border px-4 py-2"><?= $d['nama'] ?></td>
-          <td class="border px-4 py-2"><?= $d['ipk'] ?></td>
-          <td class="border px-4 py-2"><?= $d['penghasilan'] ?></td>
-          <td class="border px-4 py-2"><?= $d['jarak'] ?></td>
-        </tr>
-      </tbody>
+        <tbody>
+          <tr>
+            <td class="border px-4 py-2"><?= $d['nama'] ?></td>
+            <td class="border px-4 py-2"><?= $d['ipk'] ?></td>
+            <td class="border px-4 py-2"><?= $d['penghasilan'] ?></td>
+            <td class="border px-4 py-2"><?= $d['jarak'] ?></td>
+          </tr>
+        </tbody>
       <?php endforeach ?>
     </table>
   </main>
