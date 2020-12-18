@@ -33,14 +33,14 @@ $db = new Database;
         </tr>
       </thead>
       <?php
-      foreach ($db->tampilData() as $d) :
+      foreach ($db->query() as $q) :
       ?>
         <tbody>
           <tr>
-            <td class="border px-4 py-2"><?= $d['nama'] ?></td>
-            <td class="border px-4 py-2"><?= $d['ipk'] ?></td>
-            <td class="border px-4 py-2"><?= $d['penghasilan'] ?></td>
-            <td class="border px-4 py-2"><?= $d['jarak'] ?></td>
+            <td class="border px-4 py-2"><?= $q['nama'] ?></td>
+            <td class="border px-4 py-2"><?= $q['ipk'] ?></td>
+            <td class="border px-4 py-2"><?= $q['penghasilan'] ?></td>
+            <td class="border px-4 py-2"><?= $q['jarak'] ?></td>
           </tr>
         </tbody>
       <?php endforeach ?>

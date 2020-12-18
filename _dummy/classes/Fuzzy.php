@@ -281,27 +281,27 @@ class Fuzzy {
     return $derajatKeanggotaan;
   }
 
-  public static function tidakDapat($nilai ){
-    if($nilai < 40){
-      $derajatKeanggotaan = 1;
-    } else if($nilai >= 40 && $nilai <= 80){
-      $derajatKeanggotaan = (80 - $nilai) / (80 - 40);
-    } else {
-      $derajatKeanggotaan = 0;
-    }
-    return $derajatKeanggotaan;
-  }
+  // public static function tidakDapat($nilai ){
+  //   if($nilai < 40){
+  //     $derajatKeanggotaan = 1;
+  //   } else if($nilai >= 40 && $nilai <= 80){
+  //     $derajatKeanggotaan = (80 - $nilai) / (80 - 40);
+  //   } else {
+  //     $derajatKeanggotaan = 0;
+  //   }
+  //   return $derajatKeanggotaan;
+  // }
 
-  public static function dapat($nilai){
-    if($nilai < 40 ){
-      $derajatKeanggotaan = 0;
-    } else if($nilai >= 40 && $nilai <= 80){
-      $derajatKeanggotaan = ($nilai - 40) / (80 - 40);
-    } else {
-      $derajatKeanggotaan = 1;
-    }
-    return $derajatKeanggotaan;
-  }
+  // public static function dapat($nilai){
+  //   if($nilai < 40 ){
+  //     $derajatKeanggotaan = 0;
+  //   } else if($nilai >= 40 && $nilai <= 80){
+  //     $derajatKeanggotaan = ($nilai - 40) / (80 - 40);
+  //   } else {
+  //     $derajatKeanggotaan = 1;
+  //   }
+  //   return $derajatKeanggotaan;
+  // }
 
   public static function z_dapat($alpha, $x){
     return (80 - 40) * $alpha[$x] + 40;
@@ -356,32 +356,45 @@ class Fuzzy {
                         // $z_tidakDapat = 80 - $alpha[$x] * (80 - 40);
                         if($ip == 2 && $jr == 2 && $pn == 1 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 2 && $pn == 1 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 2 && $pn == 0 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 2 && $pn == 0 && $tg == 1 &&  $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 1 && $pn == 1 && $tg == 2 &&  $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 1 && $pn == 1 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 1 && $pn == 0 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 1 && $pn == 0 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 0 && $pn == 1 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 0 && $pn == 1 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 0 && $pn == 0 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else if($ip == 2 && $jr == 0 && $pn == 0 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
+                          $kondisi[$x] = "dapat";
                         } else {
                           $z[$x] = self::z_tidakDapat($alpha, $x);
+                          $kondisi[$x] = "tidak dapat";
                         }
-                        echo "IF IPK = {$nilaiIPK[$ip]} AND Penghasilan = {$nilaiPenghasilan[$pn]} AND Jarak = {$nilaiJarak[$jr]} AND Tanggungan = {$nilaiTanggungan[$tg]} AND Rumah = {$nilaiRumah[$rm]} AND Motor = {$nilaiMotor[$mt]} AND Mobil = {$nilaiMobil[$mb]} AND Listrik = {$nilaiListrik[$ls]} AND Air = {$nilaiAir[$ai]} THEN a_predikat =  {$alpha[$x]} z = {$z[$x]} {$x}\n";
+                        echo "IF IPK = {$nilaiIPK[$ip]} AND Penghasilan = {$nilaiPenghasilan[$pn]} AND Jarak = {$nilaiJarak[$jr]} AND Tanggungan = {$nilaiTanggungan[$tg]} AND Rumah = {$nilaiRumah[$rm]} AND Motor = {$nilaiMotor[$mt]} AND Mobil = {$nilaiMobil[$mb]} AND Listrik = {$nilaiListrik[$ls]} AND Air = {$nilaiAir[$ai]} THEN a_predikat =  {$alpha[$x]} z = {$z[$x]} kondisi = {$kondisi[$x]} \n";
                         $x++;
                       }
                     }
@@ -393,25 +406,8 @@ class Fuzzy {
         }
       }
     }
-
-    // Nilai Fuzzy Output
-    // $nilaiDapat = 0;
-    // $nilaiTidakDapat = 0;
-    // for ($l = 0; $l < $x; $l++) {
-    //   if ($kondisi[$l] == "DAPAT") {
-    //     $nilaiDapat = max($alpha[$l], $nilaiDapat);
-    //   } else {
-    //     $nilaiTidakDapat = max($alpha[$l], $nilaiTidakDapat);
-    //   }
-    // }
-    // echo "\nNilai Dapat = " . $nilaiDapat . "\n";
-    // echo "Nilai Tidak Dapat = " . $nilaiTidakDapat . "\n";
   
-    for($l = 0; $l < $x; $l++){
-      
-    }
-    self::defuzzifikasi($alpha, $l, $z);
-    
+    self::defuzzifikasi($alpha, $z);
     
   }
 
@@ -430,12 +426,17 @@ class Fuzzy {
   ==========================================================================================================================
   */
 
-  public static function defuzzifikasi($alpha, $l, $z) {
+  public static function defuzzifikasi($alpha, $z) {
     // rumus
     // (alpha1 * z1 + alpha2 * z2 + ...) / (alpha1 + alpha2 + ...)
-    var_dump($alpha);
-    // $defuzi = ($alpha[$l] * $z) / ($alpha[$l]);
-    // echo "OKE = " . $defuzi;
+    $tmp = [];
+    foreach($alpha as $key=>$a){
+      $tmp[] = $a * $z[$key];
+    }
+    $jum = array_sum($tmp);
+    $defuzi = ($jum) / (array_sum($alpha));
+    // buat hasilnya biar desimalnya jadi 2 digit
+    echo "Defuzzifikasi = " . number_format((float)$defuzi, 2, '.', '');
   }
 
   /*  
