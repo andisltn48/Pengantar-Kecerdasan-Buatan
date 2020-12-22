@@ -13,6 +13,7 @@ class Database {
     if (mysqli_connect_error()) {
       die('Gagal Koneksi ke DB');
     }
+    return $this->mysqli;
   }
 
   // Singleton Pattern -> menguji koneksi agar tidak double

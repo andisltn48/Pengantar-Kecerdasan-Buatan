@@ -281,34 +281,12 @@ class Fuzzy {
     return $derajatKeanggotaan;
   }
 
-  // public static function tidakDapat($nilai ){
-  //   if($nilai < 40){
-  //     $derajatKeanggotaan = 1;
-  //   } else if($nilai >= 40 && $nilai <= 80){
-  //     $derajatKeanggotaan = (80 - $nilai) / (80 - 40);
-  //   } else {
-  //     $derajatKeanggotaan = 0;
-  //   }
-  //   return $derajatKeanggotaan;
-  // }
-
-  // public static function dapat($nilai){
-  //   if($nilai < 40 ){
-  //     $derajatKeanggotaan = 0;
-  //   } else if($nilai >= 40 && $nilai <= 80){
-  //     $derajatKeanggotaan = ($nilai - 40) / (80 - 40);
-  //   } else {
-  //     $derajatKeanggotaan = 1;
-  //   }
-  //   return $derajatKeanggotaan;
-  // }
-
   public static function z_dapat($alpha, $x){
     return (80 - 40) * $alpha[$x] + 40;
   }
 
   public static function z_tidakDapat($alpha, $x){
-    return 80 - $alpha[$x] * (80 - 40);
+    return 80 - ($alpha[$x]) * (80 - 40);
   }
 
 
@@ -328,7 +306,6 @@ class Fuzzy {
   public static function inferensi($ipk, $penghasilan, $jarak, $tanggungan, $rumah, $motor, $mobil, $listrik, $air) {
 
     echo "Rule yang digunakan : \n";
-    // $no = 1;
     $x = 0;
     $kondisi = [];
     $nilaiIPK = [self::ipkRendah($ipk), self::ipkSedang($ipk), self::ipkTinggi($ipk)];
@@ -352,8 +329,6 @@ class Fuzzy {
                     for($ai =  0; $ai < count($nilaiAir); $ai++){
                       if(($nilaiIPK[$ip] > 0) && ($nilaiPenghasilan[$pn] > 0) && ($nilaiJarak[$jr] > 0) && ($nilaiTanggungan[$tg] > 0) && ($nilaiRumah[$rm] > 0) && ($nilaiMotor[$mt] > 0) && ($nilaiMobil[$mb] > 0) && ($nilaiListrik[$ls] > 0) && ($nilaiAir[$ai] > 0) ){
                         $alpha[$x] = min($nilaiIPK[$ip], $nilaiPenghasilan[$pn], $nilaiJarak[$jr], $nilaiTanggungan[$tg], $nilaiRumah[$rm], $nilaiMotor[$mt], $nilaiMobil[$mb], $nilaiListrik[$ls], $nilaiAir[$ai] );
-                        // $z_dapat = (80 - 40) * $alpha[$x] + 40;
-                        // $z_tidakDapat = 80 - $alpha[$x] * (80 - 40);
                         if($ip == 2 && $jr == 2 && $pn == 1 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0){
                           $z[$x] = self::z_dapat($alpha, $x);
                           $kondisi[$x] = "dapat";
@@ -427,16 +402,17 @@ class Fuzzy {
   */
 
   public static function defuzzifikasi($alpha, $z) {
-    // rumus
-    // (alpha1 * z1 + alpha2 * z2 + ...) / (alpha1 + alpha2 + ...)
+    // rumus centroid method
+    // ((alpha1 * z1) + (alpha2 * z2) + ...) / (alpha1 + alpha2 + ...)
     $tmp = [];
     foreach($alpha as $key=>$a){
       $tmp[] = $a * $z[$key];
     }
     $jum = array_sum($tmp);
     $defuzi = ($jum) / (array_sum($alpha));
+    
     // buat hasilnya biar desimalnya jadi 2 digit
-    echo "Defuzzifikasi = " . number_format((float)$defuzi, 2, '.', '');
+    echo "\nDefuzzifikasi = " . number_format((float)$defuzi, 2, '.', '') . "%";
   }
 
   /*  
