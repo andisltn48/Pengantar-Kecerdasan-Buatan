@@ -1,0 +1,248 @@
+@font-face {
+  font-family: manrope;
+  src: url('../font/manrope/Manrope.ttf');
+}
+@font-face {
+  font-family: manrope-semibold;
+  src: url('../font/manrope/Manrope-SemiBold.ttf');
+}
+@font-face {
+  font-family: manrope-bold;
+  src: url('../font/manrope/Manrope-Bold.ttf');
+}
+@font-face {
+  font-family: manrope-extrabold;
+  src: url('../font/manrope/Manrope-ExtraBold.ttf');
+}
+@font-face {
+  font-family: manrope-light;
+  src: url('../font/manrope/Manrope-Light.ttf');
+}
+@font-face {
+  font-family: manrope-extralight;
+  src: url('../font/manrope/Manrope-ExtraLight.ttf');
+}
+@font-face {
+  font-family: manrope-medium;
+  src: url('../font/manrope/Manrope-Medium.ttf');
+}
+@font-face {
+  font-family: manrope-regular;
+  src: url('../font/manrope/Manrope-Regular.ttf');
+}
+.has-text-weight-light {
+  font-family: manrope-light !important;
+  font-weight: normal !important;
+}
+.has-text-weight-normal {
+  font-family: manrope-regular !important;
+  font-weight: normal !important;
+}
+.has-text-weight-medium {
+  font-family: manrope-medium !important;
+  font-weight: normal !important;
+}
+.has-text-weight-semibold {
+  font-family: manrope-semibold !important;
+  font-weight: normal !important;
+}
+.has-text-weight-bold {
+  font-family: manrope-bold !important;
+  font-weight: normal !important;
+}
+.has-text-weight-extrabold {
+  font-family: manrope-extrabold !important;
+  font-weight: normal !important;
+}
+.is-spaced-between {
+  justify-content: space-between;
+}
+.is-radiused {
+  border-radius: 50%;
+  object-fit: cover;
+  height: 50px !important;
+}
+.title {
+  line-height: 1.2 !important;
+  font-family: manrope-bold !important;
+  font-weight: normal !important;
+}
+.subtitle {
+  line-height: 28px !important;
+}
+* {
+  font-family: manrope-regular !important;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body,
+html {
+  width: 100%;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+#wrapLayout {
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+
+/*Random*/
+
+/*---------------------NAVBAR------------------------*/
+header {
+  /*background: red;*/
+}
+
+nav.navbar {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  display: block;
+  background: transparent;
+}
+nav.navbar .navbar-item:hover {
+  background: transparent !important;
+  opacity: 0.8;
+}
+nav.navbar.nav-white .navbar-brand span,
+nav.navbar.nav-white .navbar-item {
+  color: #fff !important;
+}
+nav.navbar.nav-white .navbar-item {
+  color: #fff !important;
+}
+
+.navbar-end .navbar-item {
+  padding: 0.5rem 0.75rem 0.5rem 2rem;
+}
+
+.sc-subHeader {
+  background: rgba(98, 102, 234, 1);
+}
+.sc-subHeader .hero-body {
+  padding: 6rem 1.5rem !important;
+}
+.sc-subHeader .field.has-addons {
+  justify-content: center !important;
+}
+.sc-subHeader .field.has-addons .control:nth-of-type(1) {
+  width: 35%;
+}
+
+::-webkit-input-placeholder {
+  color: grey !important;
+}
+:-ms-input-placeholder {
+  color: grey !important;
+}
+::placeholder {
+  color: grey !important;
+}
+/*.sc-subHeader .input-search{
+	width: 35%;
+}*/
+
+.sc-header {
+  height: calc(100vh);
+  /*padding-top: 1.5rem!important;*/
+  background: rgba(98, 102, 234, 0.08);
+  padding-top: 5rem !important;
+  padding-bottom: 1rem !important;
+}
+.sc-header .columns {
+  align-items: center;
+}
+/*---------------------MAIN-------------------------*/
+
+main {
+  flex-grow: 2;
+  position: relative;
+  /*background: yellow;*/
+}
+
+.sc-profil .sc-subProfil {
+  position: relative;
+  top: -89px;
+}
+.sc-profil .tabs ul li:hover a {
+  color: rgba(0, 0, 0, 0.7);
+}
+.sc-profil .tabs ul li a {
+  color: #fff;
+}
+.sc-profil .tabs ul li.is-active a {
+  color: rgba(98, 102, 234, 1) !important;
+}
+.sc-profil .tab-content {
+  display: none;
+}
+.sc-profil .tab-content.current-tab {
+  display: inherit;
+}
+.sc-login .columns {
+  padding: 0.75rem;
+  padding-bottom: 0 !important;
+  height: 100vh;
+}
+.sc-login .columns img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.sc-login .columns .column:nth-of-type(1) {
+  background: rgba(98, 102, 234, 0.2);
+}
+
+.sc-detailBeasiswa .content {
+  line-height: 38px !important;
+}
+.sc-detailBeasiswa .divider {
+  opacity: 0.4;
+}
+.sc-dbOleh {
+  display: flex !important;
+  align-items: center !important;
+}
+.sc-dbOleh img {
+  border: 1px solid lightgrey;
+}
+.sc-dbApply2 {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+.sc-dbApply {
+  display: inline-block !important;
+  transition: all 0.2s;
+}
+.sc-dbApply:hover {
+  opacity: 0.9;
+}
+
+.sc-dbApply .tag {
+  border: 1px solid lightgrey;
+}
+
+.sc-testimoni img {
+  border-radius: 10px;
+}
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card .media-content:hover {
+  opacity: 0.8;
+  transition: all 0.3s;
+}
+
+/*---------------------FOOTER-----------------------------*/
+footer {
+  line-height: 2;
+  /*background: green;*/
+}
