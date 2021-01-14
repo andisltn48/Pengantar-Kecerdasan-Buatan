@@ -61,20 +61,21 @@
 							<h2 class="subtitle is-size-5 has-text-weight-light">
 								Lorem, ipsum dolor sit amet consectetur adipisicing, elit
 							</h2>
-							<form action="">
+							<form action="beasiswa.php" method="get">
 								<div class="field has-addons mt-3">
 									<div class="control">
-										<input class="input is-medium" type="text" placeholder="Cari Beasiswa">
+										<input class="input is-medium" type="text" placeholder="Cari Beasiswa" name="cari">
 									</div>
 									<div class="control">
 										<a class="button is-medium is-primary">
 											<span class="icon is-light">
-												<i class="fas fa-search"></i>
+												<input type="submit" value="Cari">
 											</span>
 										</a>
 									</div>
 								</div>
 							</form>
+				
 						</div>
 						<div class="sc-detailBeasiswa <?= ($title != 'Bidikmisi') ? 'is-hidden' : '' ?>">
 							<p class="tag is-primary is-light is-medium mb-2">Beasiswa Penuh</p>
