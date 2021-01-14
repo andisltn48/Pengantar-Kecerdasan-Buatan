@@ -89,6 +89,14 @@ class Database {
     if ($this->mysqli->query($query)) return true;
     else die($msg);
   }
+  
+   public function tampil_databeasiswa($query) {
+    $data = mysqli_query($this->mysqli, $query );
+    while ($row = mysqli_fetch_assoc($data)) {
+      $rows[] = $row;
+    }
+    return $rows;
+  }
 
   public function escape($name) {
     return $this->mysqli->real_escape_string($name);
