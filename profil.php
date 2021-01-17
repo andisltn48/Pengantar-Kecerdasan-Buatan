@@ -2,6 +2,15 @@
 require_once 'core/init.php';
 if (Session::exists('email')) {
 	$title = "Profil";
+	$db = new Database();
+	$email = Session::get('email');
+	$id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
+	$idUser = $db->get_idUser($id);
+	$aset = $db->tampil("SELECT * FROM tbl_aset WHERE id_user = '$idUser'");
+	$ekonomi = $db->tampil("SELECT * FROM tbl_kondisiekonomi WHERE id_user = '$idUser'");
+	$rencana = $db->tampil("SELECT * FROM tbl_rencana_hidup WHERE id_user = '$idUser'");
+	$rumah = $db->tampil("SELECT * FROM tbl_rumah WHERE id_user = '$idUser'");
+	$aset = $db->tampil("SELECT * FROM tbl_aset WHERE id_user = '$idUser'");
 	include('templates/header.php')
 ?>
 
@@ -51,59 +60,61 @@ if (Session::exists('email')) {
 							<div class="has-text-centered">
 								<p class="tag is-medium is-warning has-text-weight-semibold">Proses Verifikasi</p>
 								<p class="mt-2">
-									<span class="has-text-grey">Status : </span>
+									<span class="has-text-grey">status : </span>
 									<span class="has-text-weight-semibold has-text-success">Pendaftar</span>
 								</p>
 							</div>
 						</div>
 					</div>
 				</div>
+				<?php foreach($aset as $ast): ?>
 				<div id="menu1" class="tab-content">
 					<div class="columns">
 						<div class="column is-4">
 							<span>
 								<p class="has-text-grey is-size-6">Nama Barang</p>
-								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold">Lorem ipsum</p>
+								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold"><?= $ast['Nama_Barang'] ?></p>
 							</span>
 							<br>
 							<span>
 								<p class="has-text-grey is-size-6">Merk</p>
-								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold">Lorem ipsum dolor</p>
+								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold"><?= $ast['Merk'] ?></p>
 							</span>
 							<br>
 							<span>
 								<p class="has-text-grey is-size-6">Jenis</p>
-								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold">Lorem ipsum</p>
+								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold"><?= $ast['Jenis_Barang'] ?></p>
 							</span>
 							<br>
 							<span>
 								<p class="has-text-grey is-size-6">Tahun Perolehan</p>
-								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold">200X</p>
+								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold"><?= $ast['Tahun_Perolehan'] ?></p>
 							</span>
 						</div>
 						<div class="column is-4">
 							<span>
 								<p class="has-text-grey is-size-6">Metode Perolehan</p>
-								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold">Lorem ipsum</p>
+								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold"><?= $ast['Metode_Perolehan'] ?></p>
 							</span>
 							<br>
 							<span>
 								<p class="has-text-grey is-size-6">Kondisi Barang</p>
-								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold">Lorem ipsum dolor</p>
+								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold"><?= $ast['Kondisi_Barang'] ?></p>
 							</span>
 							<br>
 							<span>
 								<p class="has-text-grey is-size-6">Harga Beli</p>
-								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold">Lorem ipsum</p>
+								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold"><?= $ast['Harga_Beli'] ?></p>
 							</span>
 							<br>
 							<span>
 								<p class="has-text-grey is-size-6">BPKPB-STNK</p>
-								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold"><a href="#">gambar.png</a></p>
+								<p class="has-text-grey-dark is-size-5 has-text-weight-semibold"><a href="#"><?= $ast['BPKB_STNK'] ?></a></p>
 							</span>
 						</div>
 					</div>
 				</div>
+				<?php endforeach ?>
 				<div id="menu2" class="tab-content">
 					<div class="columns">
 						<div class="column is-4">

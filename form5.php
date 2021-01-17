@@ -3,52 +3,57 @@ require_once 'core/init.php';
 $title = "Form";
 $db = new Database();
 
-// if(isset($_POST['next4'])){
-// 	Session::set('tmp_tinggal', $_POST['tmp_tinggal']);
-// 	Session::set('dukungan', $_POST['dukungan']);
-// 	Session::set('transportasi', $_POST['transportasi']);
-// 	Session::set('biaya', $_POST['biaya']);
+if(isset($_POST['next4'])){
+	Session::set('tmp_tinggal', $_POST['tmp_tinggal']);
+	Session::set('dukungan', $_POST['dukungan']);
+	Session::set('transportasi', $_POST['transportasi']);
+	Session::set('biaya', $_POST['biaya']);
+}
 $email = Session::get('email');
 $id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
-
-if (isset($_POST['submit5'])) {
-	// $db->insert('tbl_biodata', [
-	// 	'NIM' => Session::get('nim'),
-	// 	'Nama' => Session::get('nama'),
-	// 	'Jenis_Kelamin' => Session::get('jk'),
-	// 	'Tempat_Lahir' => Session::get('tmp_lahir'),
-	// 	'Tanggal_Lahir' => Session::get('tgl_lahir'),
-	// 	'Alamat' => Session::get('alamat'),
-	// 	'Kode_Pos' => Session::get('pos'),
-	// 	'No_Telepon' => Session::get('telp'),
-	// 	'No_Handphone' => Session::get('hp'),
-	// 	'IPK' => Session::get('ipk')
-	// ]).$db->insert('tbl_aset', [
-	// 	'Nama_Barang' => Session::get('nama_barang'),
-	// 	'Merk' => Session::get('merk'),
-	// 	'Jenis_Barang' => Session::get('jenis_barang'),
-	// 	'Tahun_Perolehan' => Session::get('tahun_perolehan'),
-	// 	'Metode_Perolehan' => Session::get('metode_perolehan'),
-	// 	'Kondisi_Barang' => Session::get('kondisi'),
-	// 	'Harga_Beli' => Session::get('harga'),
-	// 	'BPKB_STNK' => Session::get('bpkb'),
-	// ]).$db->insert('tbl_kondisiekonomi', [
-	// 	'Pekerjaan_Ayah_Wali' => Session::get('pk_ayah'),
-	// 	'Penghasilan_Ayah_Wali' => Session::get('pg_ayah'),
-	// 	'Detail_Pekerjaan_Ayah_Wali' => Session::get('detail_ayah'),
-	// 	'Bantuan_Pemerintah' => Session::get('bantuan'),
-	// 	'Nominal' => Session::get('nominal'),
-	// 	'Pekerjaan_Ibu' => Session::get('pk_ibu'),
-	// 	'Penghasilan_Ibu' => Session::get('pg_ibu'),
-	// 	'Detail_Pekerjaan_Ibu' => Session::get('detail_ibu'),
-	// ]).$db->insert('tbl_rencana_hidup', [
-	// 	'Tempat_Tinggal' => Session::get('tmp_tinggal'),
-	// 	'Dukungan_Keluarga' => Session::get('dukungan'),
-	// 	'Transportasi_Harian' => Session::get('transportasi'),
-	// 	'Biaya_Transportasi' => Session::get('biaya'),
-	// ]).
+var_dump($_FILES);
+if (isset($_POST['submit'])) {
 	$idUser = $db->get_idUser($id);
-	$db->insert('tbl_rumah', [
+	$db->insert('tbl_biodata', [
+		'NIM' => Session::get('nim'),
+		'Nama' => Session::get('nama'),
+		'Jenis_Kelamin' => Session::get('jk'),
+		'Tempat_Lahir' => Session::get('tmp_lahir'),
+		'Tanggal_Lahir' => Session::get('tgl_lahir'),
+		'Alamat' => Session::get('alamat'),
+		'Kode_Pos' => Session::get('pos'),
+		'No_Telepon' => Session::get('telp'),
+		'No_Handphone' => Session::get('hp'),
+		'IPK' => Session::get('ipk'),
+		'Foto' => Session::get('foto'),
+		'id_user' => $idUser
+	]) . $db->insert('tbl_aset', [
+		'Nama_Barang' => Session::get('nama_barang'),
+		'Merk' => Session::get('merk'),
+		'Jenis_Barang' => Session::get('jenis_barang'),
+		'Tahun_Perolehan' => Session::get('tahun_perolehan'),
+		'Metode_Perolehan' => Session::get('metode_perolehan'),
+		'Kondisi_Barang' => Session::get('kondisi'),
+		'Harga_Beli' => Session::get('harga'),
+		'BPKB_STNK' => Session::get('bpkb'),
+		'id_user' => $idUser
+	]) . $db->insert('tbl_kondisiekonomi', [
+		'Pekerjaan_Ayah_Wali' => Session::get('pk_ayah'),
+		'Penghasilan_Ayah_Wali' => Session::get('pg_ayah'),
+		'Detail_Pekerjaan_Ayah_Wali' => Session::get('detail_ayah'),
+		'Bantuan_Pemerintah' => Session::get('bantuan'),
+		'Nominal' => Session::get('nominal'),
+		'Pekerjaan_Ibu' => Session::get('pk_ibu'),
+		'Penghasilan_Ibu' => Session::get('pg_ibu'),
+		'Detail_Pekerjaan_Ibu' => Session::get('detail_ibu'),
+		'id_user' => $idUser
+	]) . $db->insert('tbl_rencana_hidup', [
+		'Tempat_Tinggal' => Session::get('tmp_tinggal'),
+		'Dukungan_Keluarga' => Session::get('dukungan'),
+		'Transportasi_Harian' => Session::get('transportasi'),
+		'Biaya_Transportasi' => Session::get('biaya'),
+		'id_user' => $idUser
+	]) . $db->insert('tbl_rumah', [
 		'Jenis_Kepemilikan' => $_POST['jenis_kepemilikan'],
 		'Sumber_Listrik' => $_POST['sumber_listrik'],
 		'Daya_Listrik' => $_POST['daya_listrik'],
@@ -65,7 +70,6 @@ if (isset($_POST['submit5'])) {
 		'Jumlah_orang_tinggal' => $_POST['jml_orang'],
 		'id_user' => $idUser
 	]);
-	header('Location: _tes.php');
 }
 
 
@@ -180,7 +184,7 @@ include('templates/header.php')
 					<div class="control">
 						<button type="submit" name="submit" class="button is-link">Submit</button>
 					</div>
-					<button class="button" type="submit" name="submit5">tes</button>
+					<!-- <button class="button" type="submit" name="submit5">tes</button> -->
 				</div>
 			</div>
 		</div>

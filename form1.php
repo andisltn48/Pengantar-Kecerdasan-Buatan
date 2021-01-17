@@ -5,27 +5,26 @@ $db = new Database();
 
 // Session::set('id', $_POST['id']);
 
-$email = Session::get('email');
-$id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
-
-if (isset($_POST['submit'])) {
-	$idUser = $db->get_idUser($id);
-	$db->insert('tbl_biodata', [
-		'NIM' => $_POST['nim'],
-		'Nama' => $_POST['nama'],
-		'Jenis_Kelamin' => $_POST['jk'],
-		'Tempat_Lahir' => $_POST['tmp_lahir'],
-		'Tanggal_Lahir' => $_POST['tgl_lahir'],
-		'Alamat' => $_POST['alamat'],
-		'Kode_Pos' => $_POST['pos'],
-		'No_Telepon' => $_POST['telp'],
-		'No_Handphone' => $_POST['hp'],
-		'IPK' => $_POST['ipk'],
-		'Foto' => $_POST['foto'],
-		'id_user' => $idUser
-	]);
-	// header('Location: _tes.php');
-}
+// $email = Session::get('email');
+// $id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
+// if (isset($_POST['submit'])) {
+// 	$idUser = $db->get_idUser($id);
+// 	$db->insert('tbl_biodata', [
+// 		'NIM' => $_POST['nim'],
+// 		'Nama' => $_POST['nama'],
+// 		'Jenis_Kelamin' => $_POST['jk'],
+// 		'Tempat_Lahir' => $_POST['tmp_lahir'],
+// 		'Tanggal_Lahir' => $_POST['tgl_lahir'],
+// 		'Alamat' => $_POST['alamat'],
+// 		'Kode_Pos' => $_POST['pos'],
+// 		'No_Telepon' => $_POST['telp'],
+// 		'No_Handphone' => $_POST['hp'],
+// 		'IPK' => $_POST['ipk'],
+// 		'Foto' => $db->upload(),
+// 		'id_user' => $idUser
+// 	]);
+// 	// header('Location: _tes.php');
+// }
 // if(isset($_POST['signup'])){
 // 	Session::set('email', $_POST['email']);
 // 	Session::set('password', $_POST['password']);
@@ -35,7 +34,7 @@ include('templates/header.php'); ?>
 <section class="section sc-form">
 	<p class="title is-size-3 has-text-centered">Biodata Diri</p>
 	<hr class="divider">
-	<form action="" method="post">
+	<form action="form2.php" method="post" enctype="multipart/form-data">
 		<div class="columns is-centered is-multiline">
 			<div class="column is-4">
 				<div class="field mb-4">
@@ -59,10 +58,6 @@ include('templates/header.php'); ?>
 								<?= $jk ?>
 						</label>
 					<?php endforeach ?>
-					<!-- <label class="radio">
-							<input type="radio" name="jk">
-							Perempuan
-						</label> -->
 					</div>
 				</div>
 				<div class="field mb-4">
@@ -86,7 +81,7 @@ include('templates/header.php'); ?>
 				<div class="field mb-4">
 					<label class="label has-text-weight-normal">Pas Foto <span class="has-text-danger">*</span></label>
 					<div class="control">
-						<input class="input" type="file" accept=".png, .jpg, .jpeg" name="foto">
+						<input class="input" type="file" accept=".png, .jpg, .jpeg" name="foto" id="foto">
 					</div>
 				</div>
 			</div>
@@ -130,7 +125,7 @@ include('templates/header.php'); ?>
 					<div class="control">
 						<button class="button is-link" type="submit" name="next">Selanjutnya</button>
 					</div>
-					<button class="button" type="submit" name="submit">tes</button>
+					<!-- <button class="button" type="submit" name="submit">tes</button> -->
 				</div>
 			</div>
 		</div>

@@ -3,43 +3,43 @@ require_once 'core/init.php';
 $title = "Form";
 $db = new Database();
 
-// if(isset($_POST['next'])){
-// 	Session::set('nama', $_POST['nama']);
-// 	Session::set('nim', $_POST['nim']);
-// 	Session::set('jk', $_POST['jk']);
-// 	Session::set('tmp_lahir', $_POST['tmp_lahir']);
-// 	Session::set('tgl_lahir', $_POST['tgl_lahir']);
-// 	Session::set('ipk', $_POST['ipk']);
-// 	Session::set('foto', $_POST['foto']);
-// 	Session::set('alamat', $_POST['alamat']);
-// 	Session::set('pos', $_POST['pos']);
-// 	Session::set('telp', $_POST['telp']);
-// 	Session::set('hp', $_POST['hp']);
-// }
-$email = Session::get('email');
-$id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
-
-if(isset($_POST['submit2'])){
-	$idUser = $db->get_idUser($id);
-	$db->insert('tbl_aset', [
-		'Nama_Barang' => $_POST['nama_barang'],
-		'Merk' => $_POST['merk'],
-		'Jenis_Barang' => $_POST['jenis_barang'],
-		'Tahun_Perolehan' => $_POST['tahun_perolehan'],
-		'Metode_Perolehan' => $_POST['metode_perolehan'],
-		'Kondisi_Barang' => $_POST['kondisi'],
-		'Harga_Beli' =>$_POST['harga'],
-		'BPKB_STNK' => $_POST['bpkb'],
-		'id_user' => $idUser
-	]);
-	header('Location: _tes.php');
+if(isset($_POST['next'])){
+	Session::set('nama', $_POST['nama']);
+	Session::set('nim', $_POST['nim']);
+	Session::set('jk', $_POST['jk']);
+	Session::set('tmp_lahir', $_POST['tmp_lahir']);
+	Session::set('tgl_lahir', $_POST['tgl_lahir']);
+	Session::set('ipk', $_POST['ipk']);
+	Session::set('foto', $db->upload());
+	Session::set('alamat', $_POST['alamat']);
+	Session::set('pos', $_POST['pos']);
+	Session::set('telp', $_POST['telp']);
+	Session::set('hp', $_POST['hp']);
 }
+// $email = Session::get('email');
+// $id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
+
+// if(isset($_POST['submit2'])){
+// 	$idUser = $db->get_idUser($id);
+// 	$db->insert('tbl_aset', [
+// 		'Nama_Barang' => $_POST['nama_barang'],
+// 		'Merk' => $_POST['merk'],
+// 		'Jenis_Barang' => $_POST['jenis_barang'],
+// 		'Tahun_Perolehan' => $_POST['tahun_perolehan'],
+// 		'Metode_Perolehan' => $_POST['metode_perolehan'],
+// 		'Kondisi_Barang' => $_POST['kondisi'],
+// 		'Harga_Beli' =>$_POST['harga'],
+// 		'BPKB_STNK' => $_POST['bpkb'],
+// 		'id_user' => $idUser
+// 	]);
+// 	header('Location: _tes.php');
+// }
 include('templates/header.php') ?>
 
 <section class="section sc-form">
 	<p class="title is-size-3 has-text-centered">Data Aset</p>
 	<hr class="divider">
-	<form action="" method="post">
+	<form action="form3.php" method="post">
 		<div class="columns is-centered is-multiline">
 			<div class="column is-4">
 				<div class="field mb-4">
@@ -116,7 +116,7 @@ include('templates/header.php') ?>
 					<div class="control">
 						<button type="submit" name="next2" class="button is-link">Selanjutnya</button>
 					</div>
-					<button class="button" type="submit" name="submit2">tes</button>
+					<!-- <button class="button" type="submit" name="submit2">tes</button> -->
 
 				</div>
 			</div>

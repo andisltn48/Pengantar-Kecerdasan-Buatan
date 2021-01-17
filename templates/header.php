@@ -151,7 +151,7 @@
 								<div class="columns">
 									<div class="column is-narrow">
 										<figure style="width: 200px; height: 250px; overflow: hidden; border-radius: 8px; box-shadow: -5px 10px 15px 0 rgba(0,0,0,0.35)">
-											<img src="https://1.bp.blogspot.com/-L5Zp77_zXxw/XbCRJRaO1nI/AAAAAAAADo0/YvgCVjnQ8QYJ-fbBWC7ZeL8nshlLYQIJQCLcBGAsYHQ/s1600/contoh%2Bfoto%2Buntuk%2Bcpns.jpeg" alt="" style="object-fit: cover; object-position: top;">
+											<img src="assets/img/profil/<?= $row["Foto"] ?>" alt="" style="object-fit: cover; object-position: top;">
 										</figure>
 									</div>
 									<div class="column is-8">

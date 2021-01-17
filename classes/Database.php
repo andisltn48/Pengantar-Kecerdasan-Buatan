@@ -109,6 +109,31 @@ class Database {
     return $data;
   }
 
+  public function upload() {
+    $nama = $_FILES['foto']['name'];
+    // $ukuran = $_FILES['Foto']['size'];
+    // $error = $_FILES['Foto']['error'];
+    $tmpName = $_FILES['foto']['tmp_name'];
+
+    $ekstensiValid = ['jpg', 'jpeg', 'png'];
+    $ekstensi = explode('.', $nama);
+    $ekstensi = strtolower(end($ekstensi));
+
+    // if($ukuran > 1000000){
+    //   echo "<script>
+		// 		alert('ukuran gambar terlalu besar!');
+		// 	  </script>";
+    // return false;
+    // }
+
+    $namaBaru = uniqid();
+    $namaBaru .= '.';
+    $namaBaru .= $ekstensi;
+
+    move_uploaded_file($tmpName, 'assets/img/profil/' . $namaBaru);
+    return $namaBaru;
+  }
+
   public function get_enum($table, $field) {
     $type = $this->mysqli->query("SHOW COLUMNS FROM {$table} WHERE Field = '{$field}'")->fetch_array(MYSQLI_ASSOC)['Type'];
     preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);

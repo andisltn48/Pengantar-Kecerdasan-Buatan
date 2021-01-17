@@ -3,36 +3,36 @@ require_once 'core/init.php';
 $title = "Form";
 $db = new Database();
 
-// if(isset($_POST['next3'])){
-// 	Session::set('pk_ayah', $_POST['pk_ayah']);
-// 	Session::set('pg_ayah', $_POST['pg_ayah']);
-// 	Session::set('detail_ayah', $_POST['detail_ayah']);
-// 	Session::set('bantuan', $_POST['bantuan']);
-// 	Session::set('nominal', $_POST['nominal']);
-// 	Session::set('pk_ibu', $_POST['pk_ibu']);
-// 	Session::set('pg_ibu', $_POST['pg_ibu']);
-// 	Session::set('detail_ibu', $_POST['detail_ibu']);
-// }
-$email = Session::get('email');
-$id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
-
-if(isset($_POST['submit4'])){
-	$idUser = $db->get_idUser($id);
-	$db->insert('tbl_rencana_hidup', [
-		'Tempat_Tinggal' => $_POST['tmp_tinggal'],
-		'Dukungan_Keluarga' => $_POST['dukungan'],
-		'Transportasi_Harian' => $_POST['transportasi'],
-		'Biaya_Transportasi' => $_POST['biaya'],
-		'id_user' => $idUser
-	]);
+if(isset($_POST['next3'])){
+	Session::set('pk_ayah', $_POST['pk_ayah']);
+	Session::set('pg_ayah', $_POST['pg_ayah']);
+	Session::set('detail_ayah', $_POST['detail_ayah']);
+	Session::set('bantuan', $_POST['bantuan']);
+	Session::set('nominal', $_POST['nominal']);
+	Session::set('pk_ibu', $_POST['pk_ibu']);
+	Session::set('pg_ibu', $_POST['pg_ibu']);
+	Session::set('detail_ibu', $_POST['detail_ibu']);
 }
+// $email = Session::get('email');
+// $id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
+
+// if(isset($_POST['submit4'])){
+// 	$idUser = $db->get_idUser($id);
+// 	$db->insert('tbl_rencana_hidup', [
+// 		'Tempat_Tinggal' => $_POST['tmp_tinggal'],
+// 		'Dukungan_Keluarga' => $_POST['dukungan'],
+// 		'Transportasi_Harian' => $_POST['transportasi'],
+// 		'Biaya_Transportasi' => $_POST['biaya'],
+// 		'id_user' => $idUser
+// 	]);
+// }
 include('templates/header.php')
 ?>
 
 <section class="section sc-form">
 	<p class="title is-size-3 has-text-centered">Data Rencana Hidup</p>
 	<hr class="divider">
-	<form action="" method="post">
+	<form action="form5.php" method="post">
 		<div class="columns is-centered is-multiline">
 			<div class="column is-4">
 				<div class="field mb-4">
@@ -77,7 +77,7 @@ include('templates/header.php')
 					<div class="control">
 						<button name="next4" class="button is-link">Selanjutnya</button>
 					</div>
-					<button class="button" type="submit" name="submit4">tes</button>
+					<!-- <button class="button" type="submit" name="submit4">tes</button> -->
 				</div>
 			</div>
 		</div>
