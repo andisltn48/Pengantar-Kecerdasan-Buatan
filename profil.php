@@ -51,7 +51,7 @@ if (Session::exists('email')) {
 							<div class="has-text-centered">
 								<p class="tag is-medium is-warning has-text-weight-semibold">Proses Verifikasi</p>
 								<p class="mt-2">
-									<span class="has-text-grey">status : </span>
+									<span class="has-text-grey">Status : </span>
 									<span class="has-text-weight-semibold has-text-success">Pendaftar</span>
 								</p>
 							</div>
@@ -254,6 +254,8 @@ if (Session::exists('email')) {
 	</section>
 
 <?php include('templates/footer.php');
-} else { $title = "not_login"; include('templates/header.php')?>
-	
+} else {
+	$title = "not_login";
+	include('templates/header.php') ?>
+
 <?php } ?>

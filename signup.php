@@ -14,11 +14,6 @@ if (isset($_POST['signup'])) {
 	$validation = new Validation();
 	// 2. metode check
 	$validation = $validation->check([
-		'username' => [
-			'required' => true,
-			'min' => 4,
-			'max' => 50
-		],
 		'email' => ['required' => true],
 		'password' => [
 			'required' => true,
@@ -30,18 +25,17 @@ if (isset($_POST['signup'])) {
 		]
 	]);
 
-	if ($register->cek_email($_POST['email'])) {
+	if ($user->cek_email($_POST['email'])) {
 		$errors[] = 'Email sudah terdaftar';
 	} else {
 		// 3. lolos ujian
 		if ($validation->passed()) {
-			$register->register_user([
-				'username' => $_POST['username'],
+			$user->register_user([
 				'email' => $_POST['email'],
 				'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
 			]);
 			Session::set('email', $_POST['email']);
-			header('Location: index.php');
+			header('Location: form1.php');
 		} else {
 			$errors = $validation->errors();
 		}
@@ -95,25 +89,19 @@ if (isset($_POST['signup'])) {
 								</div>
 							<?php endif ?>
 							<div class="field">
-								<label class="label has-text-weight-normal">Username</label>
+								<label class="label has-text-weight-normal">Email <span class="has-text-danger">*</span></label>
 								<div class="control">
-									<input class="input" type="text" name="username" required>
+									<input class="input" type="email" name="email" required>
 								</div>
 							</div>
 							<div class="field">
-								<label class="label has-text-weight-normal">Email</label>
-								<div class="control">
-									<input class="input" type="text" name="email" required>
-								</div>
-							</div>
-							<div class="field">
-								<label class="label has-text-weight-normal">Password</label>
+								<label class="label has-text-weight-normal">Password <span class="has-text-danger">*</span></label>
 								<div class="control">
 									<input class="input" type="password" name="password" required>
 								</div>
 							</div>
 							<div class="field mb-5">
-								<label class="label has-text-weight-normal">Re-type Password</label>
+								<label class="label has-text-weight-normal">Re-type Password <span class="has-text-danger">*</span></label>
 								<div class="control">
 									<input class="input" type="password" name="password_verify" required>
 								</div>

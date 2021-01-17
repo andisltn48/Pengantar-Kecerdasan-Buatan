@@ -64,18 +64,19 @@
 							<form action="beasiswa.php" method="get">
 								<div class="field has-addons mt-3">
 									<div class="control">
-										<input class="input is-medium" type="text" placeholder="Cari Beasiswa" name="cari">
+										<input class="input is-medium" type="search" placeholder="Cari Beasiswa" name="cari">
 									</div>
 									<div class="control">
-										<a class="button is-medium is-primary">
+										<button class="button is-medium is-primary" type="submit">
 											<span class="icon is-light">
-												<input type="submit" value="Cari">
+												<!-- <input type="submit" value="Cari"> -->
+												<i class="fas fa-search"></i>
 											</span>
-										</a>
+										</button>
 									</div>
 								</div>
 							</form>
-				
+
 						</div>
 						<div class="sc-detailBeasiswa <?= ($title != 'Bidikmisi') ? 'is-hidden' : '' ?>">
 							<p class="tag is-primary is-light is-medium mb-2">Beasiswa Penuh</p>
@@ -137,56 +138,66 @@
 								</span>
 							</span>
 						</div>
-						<div class="sc-profil <?= ($title != 'Profil') ? 'is-hidden' : '' ?>">
-							<div class="columns">
-								<div class="column is-narrow">
-									<figure style="width: 200px; height: 250px; overflow: hidden; border-radius: 8px; box-shadow: -5px 10px 15px 0 rgba(0,0,0,0.35)">
-										<img src="https://1.bp.blogspot.com/-L5Zp77_zXxw/XbCRJRaO1nI/AAAAAAAADo0/YvgCVjnQ8QYJ-fbBWC7ZeL8nshlLYQIJQCLcBGAsYHQ/s1600/contoh%2Bfoto%2Buntuk%2Bcpns.jpeg" alt="" style="object-fit: cover; object-position: top;">
-									</figure>
-								</div>
-								<div class="column is-8">
-									<div class="columns is-multiline">
-										<div class="column is-8">
-											<p class="is-size-2 has-text-weight-bold mb-2">Melinda Ayu Ratna</p>
-											<div class="tags are-medium">
-												<p class="tag is-dark is-light has-text-weight-semibold">NISN. 02392443</p>
-												<p class="tag is-primary is-light has-text-weight-semibold">IPK. 3.4</p>
+						<?php
+						$db = new Database();
+						$email = Session::get('email');
+						$id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
+						$idUser = $db->get_idUser($id);
+						$biodata = $db->tampil("SELECT * FROM tbl_biodata WHERE id_user = '$idUser'");
+						setlocale(LC_ALL, 'id-ID', 'id_ID');
+						foreach ($biodata as $row) :
+						?>
+							<div class="sc-profil <?= ($title != 'Profil') ? 'is-hidden' : '' ?>">
+								<div class="columns">
+									<div class="column is-narrow">
+										<figure style="width: 200px; height: 250px; overflow: hidden; border-radius: 8px; box-shadow: -5px 10px 15px 0 rgba(0,0,0,0.35)">
+											<img src="https://1.bp.blogspot.com/-L5Zp77_zXxw/XbCRJRaO1nI/AAAAAAAADo0/YvgCVjnQ8QYJ-fbBWC7ZeL8nshlLYQIJQCLcBGAsYHQ/s1600/contoh%2Bfoto%2Buntuk%2Bcpns.jpeg" alt="" style="object-fit: cover; object-position: top;">
+										</figure>
+									</div>
+									<div class="column is-8">
+										<div class="columns is-multiline">
+											<div class="column is-8">
+												<p class="is-size-2 has-text-weight-bold mb-2"><?= $row["Nama"] ?></p>
+												<div class="tags are-medium">
+													<p class="tag is-dark is-light has-text-weight-semibold">NIM. <?= $row["NIM"] ?></p>
+													<p class="tag is-primary is-light has-text-weight-semibold">IPK. <?= $row["IPK"] ?></p>
+												</div>
 											</div>
-										</div>
-										<div class="column is-4" style="align-self: center;">
-											<a href="form.php" class="button is-light">
-												<span class="icon is-small has-text-link">
-													<i class="fas fa-edit"></i>
+											<div class="column is-4" style="align-self: center;">
+												<a href="form1.php" class="button is-light">
+													<span class="icon is-small has-text-link">
+														<i class="fas fa-edit"></i>
+													</span>
+													<span class="has-text-weight-semibold">Ubah / Lengkapi Data</span>
+												</a>
+											</div>
+											<div class="column is-6">
+												<span>
+													<p class="has-text-light is-size-6">Email</p>
+													<p class="has-text-light is-size-5 has-text-weight-semibold"><?= Session::get('email') ?></p>
 												</span>
-												<span class="has-text-weight-semibold">Ubah / Lengkapi Data</span>
-											</a>
-										</div>
-										<div class="column is-6">
-											<span>
-												<p class="has-text-light is-size-6">Email</p>
-												<p class="has-text-light is-size-5 has-text-weight-semibold"><?= Session::get('email') ?></p>
-											</span>
-											<br>
-											<span>
-												<p class="has-text-light is-size-6">Tempat Tanggal Lahir</p>
-												<p class="has-text-light is-size-5 has-text-weight-semibold">Samarindu, 18 September 2000</p>
-											</span>
-										</div>
-										<div class="column is-6">
-											<span>
-												<p class="has-text-light is-size-6">Jenis Kelamin</p>
-												<p class="has-text-light is-size-5 has-text-weight-semibold">Perempuan</p>
-											</span>
-											<br>
-											<span>
-												<p class="has-text-light is-size-6">Alamat</p>
-												<p class="has-text-light is-size-5 has-text-weight-semibold">Jalan Sei wain 07234, Balikpapan</p>
-											</span>
+												<br>
+												<span>
+													<p class="has-text-light is-size-6">Tempat Tanggal Lahir</p>
+													<p class="has-text-light is-size-5 has-text-weight-semibold"><?= $row["Tempat_Lahir"] . ", " . strftime(" %d %B %Y", strtotime($row["Tanggal_Lahir"])) ?></p>
+												</span>
+											</div>
+											<div class="column is-6">
+												<span>
+													<p class="has-text-light is-size-6">Jenis Kelamin</p>
+													<p class="has-text-light is-size-5 has-text-weight-semibold"><?= $row["Jenis_Kelamin"] ?></p>
+												</span>
+												<br>
+												<span>
+													<p class="has-text-light is-size-6">Alamat</p>
+													<p class="has-text-light is-size-5 has-text-weight-semibold"><?= $row["Alamat"] ?></p>
+												</span>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						<?php endforeach ?>
 						<div class="sc-form <?= ($title != 'Form') ? 'is-hidden' : '' ?>">
 							<p class="title is-size-2">Ubah / Lengkapi Data</p>
 							<p class="subtitle is-size-4">Melinda Ayu Ratna</p>

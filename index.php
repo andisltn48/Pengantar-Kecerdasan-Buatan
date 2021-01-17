@@ -1,6 +1,7 @@
 <?php
 require_once 'core/init.php';
 $title = "Beranda";
+$db = new Database;
 include('templates/header.php');
 ?>
 <section class="section sc-benefit mb-6 mt-5">

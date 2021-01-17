@@ -24,24 +24,20 @@ class Database {
     return self::$INSTANCE;
   }
 
-  public function tampil_data($table) {
-    $data = new mysqli($this->mysqli, "SELECT * FROM $table");
-    while ($row = mysqli_fetch_assoc($data)) {
-      $rows[] = $row;
-    }
-    return $rows;
-  }
+  // public function tampil_data($table) {
+  //   $data = new mysqli($this->mysqli, "SELECT * FROM $table");
+  //   while ($row = mysqli_fetch_assoc($data)) {
+  //     $rows[] = $row;
+  //   }
+  //   return $rows;
+  // }
 
-  public function edit_data($id) {
-    $data = new mysqli($this->mysqli, "SELECT * FROM dummy WHERE id='$id'");
-    while ($row = mysqli_fetch_assoc($data)) {
-      $rows[] = $row;
-    }
-    return $rows;
-  }
-
-  // public function tambah_data($nama,$ipk,$penghasilan,$jarak){
-  //     new mysqli($this->mysqli, "INSERT INTO dummy VALUES ('','$nama', $ipk, $penghasilan, $jarak)");
+  // public function edit_data($id) {
+  //   $data = new mysqli($this->mysqli, "SELECT * FROM dummy WHERE id='$id'");
+  //   while ($row = mysqli_fetch_assoc($data)) {
+  //     $rows[] = $row;
+  //   }
+  //   return $rows;
   // }
 
   // public function update_data($id, $nama, $ipk, $penghasilan, $jarak) {
@@ -70,7 +66,6 @@ class Database {
 
 
     $query = "INSERT INTO $table ($column) VALUES ($values)";
-
     return $this->run_query($query, 'Masalah saat memasukkan data');
   }
 
@@ -87,25 +82,54 @@ class Database {
 
   public function run_query($query, $msg) {
     if ($this->mysqli->query($query)) return true;
-    else die($msg);
+    else die(mysqli_error($this->mysqli));
   }
-  
-   public function tampil_databeasiswa($query) {
-    $data = mysqli_query($this->mysqli, $query );
-    while ($row = mysqli_fetch_assoc($data)) {
+
+  public function tampil($query) {
+    $data = $this->mysqli->query($query);
+    while ($row = $data->fetch_assoc()) {
       $rows[] = $row;
     }
     return $rows;
+  }
+
+  public function cari_data($table, $column, $c) {
+    if (isset($_GET[$c])) {
+      ini_set('display_errors', 'Off');
+      $cari = $_GET[$c];
+      $data = "SELECT * FROM $table where $column LIKE '%" . $cari . "%'";
+      if ($this->tampil($data) > 0) {
+        echo "<h1 class='title is-5'>Hasil Pencarian: </h1>";
+      } else {
+        echo "<h1 class='title has-text-centered '>Pencarian Tidak Ditemukan! </h1>";
+      }
+    } else {
+      $data = "SELECT * FROM $table";
+    }
+    return $data;
+  }
+
+  public function get_enum($table, $field) {
+    $type = $this->mysqli->query("SHOW COLUMNS FROM {$table} WHERE Field = '{$field}'")->fetch_array(MYSQLI_ASSOC)['Type'];
+    preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);
+    $enum = explode("','", $matches[1]);
+    return $enum;
+  }
+
+  public function get_idUser($query) {
+    foreach ($this->tampil($query) as $d) {
+      foreach ($d as $a) {
+        return $a;
+      }
+    }
   }
 
   public function escape($name) {
     return $this->mysqli->real_escape_string($name);
   }
 
-  public static function check($table){
-    $c = "SELECT COUNT(*) FROM $table";
-    return $c;
-  }
-
-  
+  // public static function check($table) {
+  //   $c = "SELECT COUNT(*) FROM $table";
+  //   return $c;
+  // }
 }

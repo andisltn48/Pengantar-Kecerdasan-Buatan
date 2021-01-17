@@ -5,6 +5,11 @@ require_once 'core/init.php';
 //   header('Location: profile.php');
 // }
 
+// $db = new Database;
+// foreach($db->get_enum("tbl_biodata", "Jenis_Kelamin") as $enum){
+// 	echo $enum;
+// }
+
 $errors = [];
 
 if (isset($_POST['login'])) {
@@ -16,8 +21,8 @@ if (isset($_POST['login'])) {
 	]);
 
 	if ($validation->passed()) {
-		if ($login->cek_email($_POST['email'])) {
-			if ($login->login_user($_POST['email'], $_POST['password'])) {
+		if ($user->cek_email($_POST['email'])) {
+			if ($user->login_user($_POST['email'], $_POST['password'])) {
 				Session::set('email', $_POST['email']);
 				header('Location: index.php');
 			} else {
