@@ -1,3 +1,7 @@
+<?php
+require_once 'core/init.php';
+$db = new Database;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,8 +82,17 @@
 				
 						</div>
 						<div class="sc-detailBeasiswa <?= ($title != 'Bidikmisi') ? 'is-hidden' : '' ?>">
-							<p class="tag is-primary is-light is-medium mb-2">Beasiswa Penuh</p>
-							<p class="title is-size-1">Beasiswa Bidikmisi 2021/2022</p>
+							<?php
+							if(isset($_GET['id'])){
+								$id = $_GET['id'];
+								$data = "SELECT * FROM daftarbeasiswa where id = '$id'";
+							}	
+							?>
+							<?php
+							foreach($db->tampil_data($data) as $d):
+							?>
+							<p class="tag is-primary is-light is-medium mb-2"><?= $d['kuota']?></p>
+							<p class="title is-size-1"><?= $d['nama']?></p>
 
 							<div class="columns">
 								<div class="column">
@@ -98,8 +111,8 @@
 
 							<div class="sc-dbOleh mb-6">
 								<span>oleh</span>
-								<img src="https://files.planet.ung.ac.id/fak/102/ristekdikti-2.jpg" class="is-radiused mx-2">
-								<span class="has-text-weight-semibold has-text-light">Riset Teknologi Pendidikan Tinggi</span>
+								<img src="<?= $d['image']?>" class="is-radiused mx-2">
+								<span class="has-text-weight-semibold has-text-light"><?= $d['penerbit']?></span>
 							</div>
 
 							<div class="sc-dbApply control">
@@ -137,6 +150,7 @@
 								</span>
 							</span>
 						</div>
+						<?php endforeach ?>
 						<div class="sc-profil <?= ($title != 'Profil') ? 'is-hidden' : '' ?>">
 							<div class="columns">
 								<div class="column is-narrow">
