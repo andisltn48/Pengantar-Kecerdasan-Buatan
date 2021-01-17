@@ -28,10 +28,11 @@ include('templates/header.php') ?>
 	<?php
 	foreach($db->tampil_data($data) as $d):
 	?>
+	
 		<div class="column is-4">
 			<div class="card">
 				<div class="card-content px-5 pt-4 pb-5">
-					<a href="detail.php">
+					<a href="detail.php?id=<?php echo $d['id']; ?>" name="detail">
 						<div class="media mb-3">
 							<div class="media-left">
 								<figure class="image is-48x48">
@@ -61,6 +62,7 @@ include('templates/header.php') ?>
 				</div>
 			</div>
 		</div>
+
 	<?php endforeach ?>
 		
 	</div>
