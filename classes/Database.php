@@ -24,30 +24,6 @@ class Database {
     return self::$INSTANCE;
   }
 
-  // public function tampil_data($table) {
-  //   $data = new mysqli($this->mysqli, "SELECT * FROM $table");
-  //   while ($row = mysqli_fetch_assoc($data)) {
-  //     $rows[] = $row;
-  //   }
-  //   return $rows;
-  // }
-
-  // public function edit_data($id) {
-  //   $data = new mysqli($this->mysqli, "SELECT * FROM dummy WHERE id='$id'");
-  //   while ($row = mysqli_fetch_assoc($data)) {
-  //     $rows[] = $row;
-  //   }
-  //   return $rows;
-  // }
-
-  // public function update_data($id, $nama, $ipk, $penghasilan, $jarak) {
-  //   new mysqli($this->mysqli, "UPDATE dummy SET Nama='$nama', Ipk ='$ipk', Penghasilan='$penghasilan', Jarak='$jarak' WHERE id='$id'");
-  // }
-
-  // public function hapus_data($id) {
-  //   new mysqli($this->mysqli, "DELETE FROM dummy WHERE id=$id");
-  // }
-
   public function insert($table, $fields = []) {
     $column = implode(", ", array_keys($fields));
 
@@ -87,6 +63,7 @@ class Database {
 
   public function tampil($query) {
     $data = $this->mysqli->query($query);
+    $rows = [];
     while ($row = $data->fetch_assoc()) {
       $rows[] = $row;
     }
@@ -121,8 +98,8 @@ class Database {
 
     // if($ukuran > 1000000){
     //   echo "<script>
-		// 		alert('ukuran gambar terlalu besar!');
-		// 	  </script>";
+    // 		alert('ukuran gambar terlalu besar!');
+    // 	  </script>";
     // return false;
     // }
 
@@ -151,6 +128,24 @@ class Database {
 
   public function escape($name) {
     return $this->mysqli->real_escape_string($name);
+  }
+
+  public function insertBeasiswa($id, $namaBeasiswa, $penerbit) {
+    $this->mysqli->query("INSERT INTO ambilbeasiswa VALUES('$id','$namaBeasiswa','$penerbit','')");
+  }
+
+  public function prosesBeasiswa($ipk, $po, $aset, $rumah) {
+    foreach ($ipk as $ip) {
+      foreach ($po as $p) {
+        foreach ($aset as $ast) {
+          foreach ($rumah as $rm) {
+            $ortu = intval($p['Penghasilan_Ayah_Wali']) + intval($p['Penghasilan_Ibu']);
+            echo Fuzzy::fungsiKeanggotaan(floatval($ip['IPK']), $ortu, floatval($rm['Jarak']), floatval($rm['Jumlah_orang_tinggal']), intval($rm['Jumlah_Rumah']), intval($ast['Jumlah_Motor']), intval($ast['Jumlah_Motor']), intval($rm['Penggunaan_listrik']), intval($rm['Penggunaan_air']));
+          }
+        }
+      }
+      return Fuzzy::get_defuzi();
+    }
   }
 
   // public static function check($table) {

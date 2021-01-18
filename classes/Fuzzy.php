@@ -7,6 +7,7 @@ class Fuzzy {
                                                     FUNGSI KEANGGOTAAN
   ==========================================================================================================================
   */
+  public static $defuzzifikasi;
 
   public static function linearTurun($a, $b, $x) {
     if ($x <= $a) {
@@ -52,7 +53,6 @@ class Fuzzy {
     $ipkSedang = function ($ipk) {
       return self::segitiga(1.5, 2.5, 3.5, $ipk);
     };
-
     // Linear Naik
     $ipkTinggi = function ($ipk) {
       return self::linearNaik(2.5, 4, $ipk);
@@ -156,7 +156,7 @@ class Fuzzy {
     $nilaiListrik = [$listrikSedikit($listrik), $listrikSedang($listrik), $listrikBanyak($listrik)];
     $nilaiAir = [$airSedikit($air), $airSedang($air), $airBanyak($air)];
 
-
+    // echo $ipk . "   " . $penghasilan . "   " . $jarak . "   " . $tanggungan . "   " . $rumah . "   " . $motor . "   " . $mobil . "   " . $listrik . "   " . $air . "   ";
     self::inferensi($nilaiIPK, $nilaiPenghasilan, $nilaiJarak, $nilaiTanggungan, $nilaiRumah, $nilaiMotor, $nilaiMobil, $nilaiListrik, $nilaiAir);
   }
 
@@ -184,7 +184,7 @@ class Fuzzy {
 
   public static function inferensi($nilaiIPK, $nilaiPenghasilan, $nilaiJarak, $nilaiTanggungan, $nilaiRumah, $nilaiMotor, $nilaiMobil, $nilaiListrik, $nilaiAir) {
 
-    echo "Rule yang digunakan : \n";
+    // echo "Rule yang digunakan : \n";
     $x = 0;
     $kondisi = [];
 
@@ -201,45 +201,32 @@ class Fuzzy {
                         $alpha[$x] = min($nilaiIPK[$ip], $nilaiPenghasilan[$pn], $nilaiJarak[$jr], $nilaiTanggungan[$tg], $nilaiRumah[$rm], $nilaiMotor[$mt], $nilaiMobil[$mb], $nilaiListrik[$ls], $nilaiAir[$ai]);
                         if ($ip == 2 && $jr == 2 && $pn == 1 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 2 && $pn == 1 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 2 && $pn == 0 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 2 && $pn == 0 && $tg == 1 &&  $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 1 && $pn == 1 && $tg == 2 &&  $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 1 && $pn == 1 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 1 && $pn == 0 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 1 && $pn == 0 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 0 && $pn == 1 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 0 && $pn == 1 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 0 && $pn == 0 && $tg == 2 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else if ($ip == 2 && $jr == 0 && $pn == 0 && $tg == 1 && $ai == 0 && $rm == 0 && $mt == 0 && $mb == 0 && $ls == 0) {
                           $z[$x] = self::z_dapat($alpha, $x);
-                          $kondisi[$x] = "dapat";
                         } else {
                           $z[$x] = self::z_tidakDapat($alpha, $x);
-                          $kondisi[$x] = "tidak dapat";
                         }
-                        echo "IF IPK = {$nilaiIPK[$ip]} AND Penghasilan = {$nilaiPenghasilan[$pn]} AND Jarak = {$nilaiJarak[$jr]} AND Tanggungan = {$nilaiTanggungan[$tg]} AND Rumah = {$nilaiRumah[$rm]} AND Motor = {$nilaiMotor[$mt]} AND Mobil = {$nilaiMobil[$mb]} AND Listrik = {$nilaiListrik[$ls]} AND Air = {$nilaiAir[$ai]} THEN a_predikat =  {$alpha[$x]} z = {$z[$x]} kondisi = {$kondisi[$x]} \n";
+                        // echo "IF IPK = {$nilaiIPK[$ip]} AND Penghasilan = {$nilaiPenghasilan[$pn]} AND Jarak = {$nilaiJarak[$jr]} AND Tanggungan = {$nilaiTanggungan[$tg]} AND Rumah = {$nilaiRumah[$rm]} AND Motor = {$nilaiMotor[$mt]} AND Mobil = {$nilaiMobil[$mb]} AND Listrik = {$nilaiListrik[$ls]} AND Air = {$nilaiAir[$ai]} THEN a_predikat =  {$alpha[$x]} z = {$z[$x]} kondisi = {$kondisi[$x]} \n";
                         $x++;
                       }
                     }
@@ -280,7 +267,12 @@ class Fuzzy {
     $defuzi = ($jum) / (array_sum($alpha));
 
     // buat hasilnya biar desimalnya jadi 2 digit
-    echo "\nDefuzzifikasi = " . number_format((float)$defuzi, 2, '.', '') . "%";
+    self::$defuzzifikasi = number_format((float)$defuzi, 2, '.', '');
+    return self::$defuzzifikasi;
+  }
+
+  public static function get_defuzi(){
+    return self::$defuzzifikasi;
   }
 
   /*  
@@ -290,4 +282,4 @@ class Fuzzy {
   */
 }
 
-echo (Fuzzy::fungsiKeanggotaan(3.3, 50000, 60, 3, 1, 1, 1, 100000, 100000));
+// echo (Fuzzy::fungsiKeanggotaan(3.5, 32000, 20, 3, 1, 1, 0, 120000, 100000));

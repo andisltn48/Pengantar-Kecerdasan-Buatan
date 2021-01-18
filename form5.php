@@ -3,7 +3,7 @@ require_once 'core/init.php';
 $title = "Form";
 $db = new Database();
 
-if(isset($_POST['next4'])){
+if (isset($_POST['next4'])) {
 	Session::set('tmp_tinggal', $_POST['tmp_tinggal']);
 	Session::set('dukungan', $_POST['dukungan']);
 	Session::set('transportasi', $_POST['transportasi']);
@@ -11,7 +11,6 @@ if(isset($_POST['next4'])){
 }
 $email = Session::get('email');
 $id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
-var_dump($_FILES);
 if (isset($_POST['submit'])) {
 	$idUser = $db->get_idUser($id);
 	$db->insert('tbl_biodata', [
@@ -28,6 +27,8 @@ if (isset($_POST['submit'])) {
 		'Foto' => Session::get('foto'),
 		'id_user' => $idUser
 	]) . $db->insert('tbl_aset', [
+		'Jumlah_Mobil' => Session::get('jml_mobil'),
+		'Jumlah_Motor' => Session::get('jml_motor'),
 		'Nama_Barang' => Session::get('nama_barang'),
 		'Merk' => Session::get('merk'),
 		'Jenis_Barang' => Session::get('jenis_barang'),
@@ -54,10 +55,12 @@ if (isset($_POST['submit'])) {
 		'Biaya_Transportasi' => Session::get('biaya'),
 		'id_user' => $idUser
 	]) . $db->insert('tbl_rumah', [
+		'Jumlah_Rumah' => $_POST['jml_rumah'],
 		'Jenis_Kepemilikan' => $_POST['jenis_kepemilikan'],
 		'Sumber_Listrik' => $_POST['sumber_listrik'],
 		'Daya_Listrik' => $_POST['daya_listrik'],
 		'Penggunaan_air' => $_POST['penggunaan_air'],
+		'Penggunaan_listrik' => $_POST['penggunaan_listrik'],
 		'Luas_Tanah' => $_POST['luas_tanah'],
 		'Luas_Bangunan' => $_POST['luas_bangunan'],
 		'Bahan_Atap' => $_POST['bahan_atap'],
@@ -70,6 +73,7 @@ if (isset($_POST['submit'])) {
 		'Jumlah_orang_tinggal' => $_POST['jml_orang'],
 		'id_user' => $idUser
 	]);
+	echo "<script>location.href='index.php'</script>";
 }
 
 
@@ -82,6 +86,12 @@ include('templates/header.php')
 	<form action="" method="post">
 		<div class="columns is-centered is-multiline">
 			<div class="column is-4">
+				<div class="field mb-4">
+					<label class="label has-text-weight-normal">Jumlah Rumah <span class="has-text-danger">*</span></label>
+					<div class="control">
+						<input class="input" type="number" name="jml_rumah" required>
+					</div>
+				</div>
 				<div class="field mb-4">
 					<label class="label has-text-weight-normal">Jenis Kepemilikan <span class="has-text-danger">*</span></label>
 					<div class="control">
@@ -102,27 +112,33 @@ include('templates/header.php')
 					</div>
 				</div>
 				<div class="field mb-4">
-					<label class="label has-text-weight-normal">Daya Listrik <span class="has-text-danger">*</span></label>
+					<label class="label has-text-weight-normal">Daya Listrik (Watt) <span class="has-text-danger">*</span></label>
 					<div class="control">
 						<input class="input" type="number" name="daya_listrik">
 					</div>
 				</div>
 				<div class="field mb-4">
-					<label class="label has-text-weight-normal">Penggunaan Air <span class="has-text-danger">*</span></label>
+					<label class="label has-text-weight-normal">Jumlah Penggunaan Air/Bulan <span class="has-text-danger">*</span></label>
 					<div class="control">
-						<input class="input" type="file" accept=".png, .jpg, .jpeg, application/pdf" name="penggunaan_air">
+						<input class="input" type="number" name="penggunaan_air">
+					</div>
+				</div>
+				<div class="field mb-4">
+					<label class="label has-text-weight-normal">Jumlah Penggunaan Listrik/Bulan <span class="has-text-danger">*</span></label>
+					<div class="control">
+						<input class="input" type="number" name="penggunaan_listrik">
 					</div>
 				</div>
 				<div class="field mb-4">
 					<label class="label has-text-weight-normal">Luas Tanah <span class="has-text-danger">*</span></label>
 					<div class="control">
-						<input class="input" type="text" name="luas_tanah">
+						<input class="input" type="number" name="luas_tanah">
 					</div>
 				</div>
 				<div class="field mb-4">
 					<label class="label has-text-weight-normal">Luas Bangunan <span class="has-text-danger">*</span></label>
 					<div class="control">
-						<input class="input" type="text" name="luas_bangunan">
+						<input class="input" type="number" name="luas_bangunan">
 					</div>
 				</div>
 				<div class="field mb-4">
@@ -146,15 +162,22 @@ include('templates/header.php')
 					</div>
 				</div>
 				<div class="field mb-4">
-					<label class="label has-text-weight-normal">PBB <span class="has-text-danger">*</span></label>
+					<label class="label has-text-weight-normal">Pajak Bumi Bangunan <span class="has-text-danger">*</span></label>
 					<div class="control">
-						<input class="input" type="text" name="pbb">
+						<input class="input" type="number" name="pbb">
 					</div>
 				</div>
 				<div class="field mb-4">
 					<label class="label has-text-weight-normal">Mandi Cuci Kakus <span class="has-text-danger">*</span></label>
 					<div class="control">
-						<input class="input" type="text" name="kakus">
+						<div class="select">
+							<select name="kakus">
+								<option value="" selected hidden disabled>Pilih</option>
+								<?php foreach ($db->get_enum("tbl_rumah", "Mandi_Cuci_Kakus") as $kakus) : ?>
+									<option><?= $kakus ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
 					</div>
 				</div>
 				<div class="field mb-4">
@@ -164,9 +187,9 @@ include('templates/header.php')
 					</div>
 				</div>
 				<div class="field mb-4">
-					<label class="label has-text-weight-normal">Jarak <span class="has-text-danger">*</span></label>
+					<label class="label has-text-weight-normal">Jarak (Km) <span class="has-text-danger">*</span></label>
 					<div class="control">
-						<input class="input" type="number" name="jarak">
+						<input class="input" type="number" name="jarak" step="0.1">
 					</div>
 				</div>
 				<div class="field mb-4">

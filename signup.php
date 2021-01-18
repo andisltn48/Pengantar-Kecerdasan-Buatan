@@ -35,7 +35,7 @@ if (isset($_POST['signup'])) {
 				'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
 			]);
 			Session::set('email', $_POST['email']);
-			header('Location: form1.php');
+			header('Location: form1.php?status=baru');
 		} else {
 			$errors = $validation->errors();
 		}

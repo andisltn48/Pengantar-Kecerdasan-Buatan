@@ -1,3 +1,10 @@
+<?php
+require_once 'core/init.php';
+$db = new Database();
+if (Session::exists('email')) {
+	$email = Session::get('email');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,11 +38,6 @@
 							<a href="index.php" class="navbar-item">Beranda</a>
 							<a href="beasiswa.php" class="navbar-item">Beasiswa</a>
 							<?php if (Session::exists('email')) { ?>
-								<!-- <div class="navbar-item">
-									<figure class="image is-32x32">
-										<img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
-									</figure>
-								</div> -->
 								<a href="profil.php" class="navbar-item">Profil</a>
 								<div class="navbar-item">
 									<a href="logout.php" class="button <?= ($title == 'Beranda') ? 'is-link' : 'is-light' ?>  is-outlined has-text-weight-semibold">Keluar</a>
@@ -69,7 +71,6 @@
 									<div class="control">
 										<button class="button is-medium is-primary" type="submit">
 											<span class="icon is-light">
-												<!-- <input type="submit" value="Cari"> -->
 												<i class="fas fa-search"></i>
 											</span>
 										</button>
@@ -78,130 +79,160 @@
 							</form>
 
 						</div>
+
 						<div class="sc-detailBeasiswa <?= ($title != 'Bidikmisi') ? 'is-hidden' : '' ?>">
-							<p class="tag is-primary is-light is-medium mb-2">Beasiswa Penuh</p>
-							<p class="title is-size-1">Beasiswa Bidikmisi 2021/2022</p>
+							<?php
+							if (isset($_GET['id'])) {
+								$id = $_GET['id'];
+								$data = $db->tampil("SELECT * FROM daftarbeasiswa WHERE id = '$id'");
+							}
+							foreach ($data as $x) :
+							?>
+								<p class="tag is-primary is-light is-medium mb-2">Buka</p>
+								<p class="title is-size-1"><?= $x['nama_beasiswa'] ?></p>
 
-							<div class="columns">
-								<div class="column">
-									<p class="has-text-weight-semibold">Tempat Beasiswa</p>
-									<p class="has-text-light">Balikpapan, Kalimantan Timur</p>
+								<div class="columns">
+									<div class="column">
+										<p class="has-text-weight-semibold">Tempat Beasiswa</p>
+										<p class="has-text-light">Balikpapan, Kalimantan Timur</p>
+									</div>
+									<div class=" column">
+										<p class="has-text-weight-semibold">Status Pendaftaran</p>
+										<p class="has-text-light">Pendaftaran Dibuka</p>
+									</div>
+									<div class="column">
+										<p class="has-text-weight-semibold">Periode Pendaftaran</p>
+										<p class="has-text-light">01 Januari 2021 - 15 Februari 2021</p>
+									</div>
 								</div>
-								<div class=" column">
-									<p class="has-text-weight-semibold">Status Pendaftaran</p>
-									<p class="has-text-light">Pendaftaran Dibuka</p>
+								<div class="sc-dbOleh mb-6">
+									<span>oleh</span>
+									<img src="<?= $x['image'] ?>" class="is-radiused mx-2">
+									<span class="has-text-weight-semibold has-text-light"><?= $x['penerbit'] ?></span>
 								</div>
-								<div class="column">
-									<p class="has-text-weight-semibold">Periode Pendaftaran</p>
-									<p class="has-text-light">01 Januari 2021 - 15 Februari 2021</p>
-								</div>
-							</div>
-
-							<div class="sc-dbOleh mb-6">
-								<span>oleh</span>
-								<img src="https://files.planet.ung.ac.id/fak/102/ristekdikti-2.jpg" class="is-radiused mx-2">
-								<span class="has-text-weight-semibold has-text-light">Riset Teknologi Pendidikan Tinggi</span>
-							</div>
-
-							<div class="sc-dbApply control">
-								<?php if (Session::exists('email')) { ?>
-									<a href="profil.php">
-										<div class="tags are-large has-addons">
-											<span class="tag is-white px-5 py-5">
-												<span class="icon is-small has-text-link">
-													<i class="fas fa-location-arrow"></i>
-												</span>
-											</span>
-											<span class="tag is-white py-5 has-text-grey-dark has-text-weight-semibold">Daftar Sekarang</span>
-										</div>
-									</a>
-								<?php } else { ?>
-									<a href="login.php">
-										<div class="tags are-large has-addons">
-											<span class="tag is-white px-5 py-5">
-												<span class="icon is-small has-text-link">
-													<i class="fas fa-location-arrow"></i>
-												</span>
-											</span>
-											<span class="tag is-white py-5 has-text-grey-dark has-text-weight-semibold">Daftar Sekarang</span>
-										</div>
-									</a>
-
-								<?php  } ?>
-							</div>
-							<span class="has-text-light-light ml-3">
-								<span class="icon is-small mr-1">
-									<i class="fas fa-info-circle"></i>
-								</span>
-								<span>
-									Pastikan telah membaca keseluruhan informasi
-								</span>
-							</span>
+								<form action="" method="post">
+									<div class="sc-dbApply control">
+										<?php if (Session::exists('email')) { ?>
+											<button type="submit" name="submit">
+												<?php
+												$id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
+												$idUser = $db->get_idUser($id);
+												$namaBeasiswa = $x['nama_beasiswa'];
+												$penerbit = $x['penerbit'];
+												?>
+												<div class="tags are-large has-addons">
+													<span class="tag is-white px-5 py-5">
+														<span class="icon is-small has-text-link">
+															<i class="fas fa-location-arrow"></i>
+														</span>
+													</span>
+													<span class="tag is-white py-5 has-text-grey-dark has-text-weight-semibold">Daftar Sekarang
+													</span>
+												</div>
+											</button>
+											<?php
+											if (isset($_POST['submit'])) {
+												$ipk = $db->tampil("SELECT IPK FROM tbl_biodata WHERE id_user = '$idUser'");
+												$po = $db->tampil("SELECT Penghasilan_Ayah_Wali, Penghasilan_Ibu FROM tbl_kondisiekonomi WHERE id_user = '$idUser'");
+												$aset = $db->tampil("SELECT Jumlah_Mobil, Jumlah_Motor FROM tbl_aset WHERE id_user = '$idUser'");
+												$rumah = $db->tampil("SELECT Jumlah_Rumah, Penggunaan_air, Penggunaan_listrik, Jarak, Jumlah_orang_tinggal FROM tbl_rumah WHERE id_user = '$idUser'");
+												
+												$db->insertBeasiswa($idUser, $namaBeasiswa, $penerbit);
+												$proses = $db->prosesBeasiswa($ipk, $po, $aset, $rumah);
+												$db->insert('hasil_fuzzy', [
+													'defuzzifikasi' => $proses,
+													'id_user' => $idUser
+												]);
+												echo "<script>location.href='profil.php'</script>";
+											}
+										} else { ?>
+											<button type="submit" name="submit2" href="login.php">
+												<div class="tags are-large has-addons">
+													<span class="tag is-white px-5 py-5">
+														<span class="icon is-small has-text-link">
+															<i class="fas fa-location-arrow"></i>
+														</span>
+													</span>
+													<span class="tag is-white py-5 has-text-grey-dark has-text-weight-semibold">Daftar Sekarang
+														<!-- <button type="submit" name="submit" class="button is-link">Daftar Sekarang</button> -->
+													</span>
+												</div>
+											</button>
+										<?php
+											if (isset($_POST['submit2'])) {
+												echo "<script>location.href='login.php'</script>";
+											}
+										} ?>
+									</div>
+								</form>
+							<?php endforeach ?>
 						</div>
 						<?php
-						$db = new Database();
-						$email = Session::get('email');
-						$id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
-						$idUser = $db->get_idUser($id);
-						$biodata = $db->tampil("SELECT * FROM tbl_biodata WHERE id_user = '$idUser'");
-						setlocale(LC_ALL, 'id-ID', 'id_ID');
-						foreach ($biodata as $row) :
+						if (Session::exists('email')) {
+							$id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
+							$idUser = $db->get_idUser($id);
+							$biodata = $db->tampil("SELECT * FROM tbl_biodata WHERE id_user = '$idUser'");
+							setlocale(LC_ALL, 'id-ID', 'id_ID');
+							foreach ($biodata as $row) {
 						?>
-							<div class="sc-profil <?= ($title != 'Profil') ? 'is-hidden' : '' ?>">
-								<div class="columns">
-									<div class="column is-narrow">
-										<figure style="width: 200px; height: 250px; overflow: hidden; border-radius: 8px; box-shadow: -5px 10px 15px 0 rgba(0,0,0,0.35)">
-											<img src="assets/img/profil/<?= $row["Foto"] ?>" alt="" style="object-fit: cover; object-position: top;">
-										</figure>
-									</div>
-									<div class="column is-8">
-										<div class="columns is-multiline">
-											<div class="column is-8">
-												<p class="is-size-2 has-text-weight-bold mb-2"><?= $row["Nama"] ?></p>
-												<div class="tags are-medium">
-													<p class="tag is-dark is-light has-text-weight-semibold">NIM. <?= $row["NIM"] ?></p>
-													<p class="tag is-primary is-light has-text-weight-semibold">IPK. <?= $row["IPK"] ?></p>
+								<div class="sc-profil <?= ($title != 'Profil') ? 'is-hidden' : '' ?>">
+									<div class="columns">
+										<div class="column is-narrow">
+											<figure style="width: 200px; height: 250px; overflow: hidden; border-radius: 8px; box-shadow: -5px 10px 15px 0 rgba(0,0,0,0.35)">
+												<img src="assets/img/profil/<?= $row["Foto"] ?>" alt="" style="object-fit: cover; object-position: top;">
+											</figure>
+										</div>
+										<div class="column is-8">
+											<div class="columns is-multiline">
+												<div class="column is-8">
+													<p class="is-size-2 has-text-weight-bold mb-2"><?= $row["Nama"] ?></p>
+													<div class="tags are-medium">
+														<p class="tag is-dark is-light has-text-weight-semibold">NIM. <?= $row["NIM"] ?></p>
+														<p class="tag is-primary is-light has-text-weight-semibold">IPK. <?= $row["IPK"] ?></p>
+													</div>
 												</div>
-											</div>
-											<div class="column is-4" style="align-self: center;">
-												<a href="form1.php" class="button is-light">
-													<span class="icon is-small has-text-link">
-														<i class="fas fa-edit"></i>
+												<div class="column is-4" style="align-self: center;">
+													<form action="" method="get">
+														<a href="form1.php?id=<?= $idUser ?>&status=edit" class="button is-light">
+															<span class="icon is-small has-text-link">
+																<i class="fas fa-edit"></i>
+															</span>
+															<span class="has-text-weight-semibold">Ubah / Lengkapi Data</span>
+														</a>
+													</form>
+												</div>
+												<div class="column is-6">
+													<span>
+														<p class="has-text-light is-size-6">Email</p>
+														<p class="has-text-light is-size-5 has-text-weight-semibold"><?= Session::get('email') ?></p>
 													</span>
-													<span class="has-text-weight-semibold">Ubah / Lengkapi Data</span>
-												</a>
-											</div>
-											<div class="column is-6">
-												<span>
-													<p class="has-text-light is-size-6">Email</p>
-													<p class="has-text-light is-size-5 has-text-weight-semibold"><?= Session::get('email') ?></p>
-												</span>
-												<br>
-												<span>
-													<p class="has-text-light is-size-6">Tempat Tanggal Lahir</p>
-													<p class="has-text-light is-size-5 has-text-weight-semibold"><?= $row["Tempat_Lahir"] . ", " . strftime(" %d %B %Y", strtotime($row["Tanggal_Lahir"])) ?></p>
-												</span>
-											</div>
-											<div class="column is-6">
-												<span>
-													<p class="has-text-light is-size-6">Jenis Kelamin</p>
-													<p class="has-text-light is-size-5 has-text-weight-semibold"><?= $row["Jenis_Kelamin"] ?></p>
-												</span>
-												<br>
-												<span>
-													<p class="has-text-light is-size-6">Alamat</p>
-													<p class="has-text-light is-size-5 has-text-weight-semibold"><?= $row["Alamat"] ?></p>
-												</span>
+													<br>
+													<span>
+														<p class="has-text-light is-size-6">Tempat Tanggal Lahir</p>
+														<p class="has-text-light is-size-5 has-text-weight-semibold"><?= $row["Tempat_Lahir"] . ", " . strftime(" %d %B %Y", strtotime($row["Tanggal_Lahir"])) ?></p>
+													</span>
+												</div>
+												<div class="column is-6">
+													<span>
+														<p class="has-text-light is-size-6">Jenis Kelamin</p>
+														<p class="has-text-light is-size-5 has-text-weight-semibold"><?= $row["Jenis_Kelamin"] ?></p>
+													</span>
+													<br>
+													<span>
+														<p class="has-text-light is-size-6">Alamat</p>
+														<p class="has-text-light is-size-5 has-text-weight-semibold"><?= $row["Alamat"] ?></p>
+													</span>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						<?php endforeach ?>
-						<div class="sc-form <?= ($title != 'Form') ? 'is-hidden' : '' ?>">
-							<p class="title is-size-2">Ubah / Lengkapi Data</p>
-							<p class="subtitle is-size-4">Melinda Ayu Ratna</p>
-						</div>
+								<div class="sc-form <?= ($title != 'Form') ? 'is-hidden' : '' ?>">
+									<p class="title is-size-2">Ubah / Lengkapi Data</p>
+									<p class="subtitle is-size-4"><?= $row["Nama"] ?></p>
+								</div>
+						<?php }
+						} ?>
 					</div>
 				</div>
 			</section>

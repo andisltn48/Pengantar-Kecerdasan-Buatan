@@ -3,32 +3,8 @@ require_once 'core/init.php';
 $title = "Form";
 $db = new Database();
 
-// Session::set('id', $_POST['id']);
+$email = Session::get('email');
 
-// $email = Session::get('email');
-// $id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
-// if (isset($_POST['submit'])) {
-// 	$idUser = $db->get_idUser($id);
-// 	$db->insert('tbl_biodata', [
-// 		'NIM' => $_POST['nim'],
-// 		'Nama' => $_POST['nama'],
-// 		'Jenis_Kelamin' => $_POST['jk'],
-// 		'Tempat_Lahir' => $_POST['tmp_lahir'],
-// 		'Tanggal_Lahir' => $_POST['tgl_lahir'],
-// 		'Alamat' => $_POST['alamat'],
-// 		'Kode_Pos' => $_POST['pos'],
-// 		'No_Telepon' => $_POST['telp'],
-// 		'No_Handphone' => $_POST['hp'],
-// 		'IPK' => $_POST['ipk'],
-// 		'Foto' => $db->upload(),
-// 		'id_user' => $idUser
-// 	]);
-// 	// header('Location: _tes.php');
-// }
-// if(isset($_POST['signup'])){
-// 	Session::set('email', $_POST['email']);
-// 	Session::set('password', $_POST['password']);
-// }
 include('templates/header.php'); ?>
 
 <section class="section sc-form">
@@ -56,8 +32,9 @@ include('templates/header.php'); ?>
 							<?php foreach ($db->get_enum("tbl_biodata", "Jenis_Kelamin") as $jk) : ?>
 								<input type="radio" value="<?= $jk ?>" name="jk">
 								<?= $jk ?>
+							<?php endforeach ?>
 						</label>
-					<?php endforeach ?>
+
 					</div>
 				</div>
 				<div class="field mb-4">
@@ -92,12 +69,6 @@ include('templates/header.php'); ?>
 						<textarea class="textarea" name="alamat"></textarea>
 					</div>
 				</div>
-				<!-- <div class="field mb-4">
-					<label class="label has-text-weight-normal">Email</label>
-					<div class="control">
-						<input class="input" type="text" name="email">
-					</div>
-				</div> -->
 				<div class="field mb-4">
 					<label class="label has-text-weight-normal">Kode POS <span class="has-text-danger">*</span></label>
 					<div class="control">
@@ -125,7 +96,6 @@ include('templates/header.php'); ?>
 					<div class="control">
 						<button class="button is-link" type="submit" name="next">Selanjutnya</button>
 					</div>
-					<!-- <button class="button" type="submit" name="submit">tes</button> -->
 				</div>
 			</div>
 		</div>

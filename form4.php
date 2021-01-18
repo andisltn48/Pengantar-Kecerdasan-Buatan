@@ -13,19 +13,6 @@ if(isset($_POST['next3'])){
 	Session::set('pg_ibu', $_POST['pg_ibu']);
 	Session::set('detail_ibu', $_POST['detail_ibu']);
 }
-// $email = Session::get('email');
-// $id = "SELECT id_user FROM tbl_user WHERE email = '$email'";
-
-// if(isset($_POST['submit4'])){
-// 	$idUser = $db->get_idUser($id);
-// 	$db->insert('tbl_rencana_hidup', [
-// 		'Tempat_Tinggal' => $_POST['tmp_tinggal'],
-// 		'Dukungan_Keluarga' => $_POST['dukungan'],
-// 		'Transportasi_Harian' => $_POST['transportasi'],
-// 		'Biaya_Transportasi' => $_POST['biaya'],
-// 		'id_user' => $idUser
-// 	]);
-// }
 include('templates/header.php')
 ?>
 
@@ -63,7 +50,7 @@ include('templates/header.php')
 					</div>
 				</div>
 				<div class="field mb-4">
-					<label class="label has-text-weight-normal">Biaya Transportasi <span class="has-text-danger">*</span></label>
+					<label class="label has-text-weight-normal">Biaya Transportasi/Bulan <span class="has-text-danger">*</span></label>
 					<div class="control">
 						<input class="input" type="number" name="biaya">
 					</div>
